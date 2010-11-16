@@ -29,6 +29,8 @@ public class TJMoid extends Activity {
 		tjmInput = (EditText) findViewById(R.id.tjmInput);
 		salaireTextView = (TextView) findViewById(R.id.salaireTextView);
 
+		calculateurSalaire = buildCalculateurSalaire();
+		
 		tjmInput.addTextChangedListener(new AbstractTextWatcher() {
 			@Override
 			public void afterTextChanged(Editable s) {
