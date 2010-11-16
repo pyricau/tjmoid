@@ -1,5 +1,7 @@
 package info.piwai.tjmoid;
 
+import java.math.BigDecimal;
+
 public class CalculateurSalaire {
 
 	public static class Builder {
@@ -64,44 +66,22 @@ public class CalculateurSalaire {
 
 	public long calculerSalaireBrut(long tjm) {
 
-		double salaireAnnuelBrut = calculerSalaireAnnuelBrut(tjm);
+		
+		double chiffreAffaireMensuelGenerePartDeLIngenieur = calculerChiffreAffaireMensuelGenerePartDeLIngenieur(tjm);
+
+		double primesBrut = calculerPrimesBrut(chiffreAffaireMensuelGenerePartDeLIngenieur);
+
+		double primesBrutBornees = calculerPrimesBrutBornees(primesBrut);
+
+		double salaireMensuelBrut = calculerSalaireMensuelBrut(primesBrutBornees);
+
+		double salaireAnnuelBrut = calculerSalaireAnnuelBrut(salaireMensuelBrut);
 
 		return Math.round(salaireAnnuelBrut);
 	}
-
-	private double calculerSalaireAnnuelBrut(long tjm) {
-		double salaireMensuelBrut = calculerSalaireMensuelBrut(tjm);
-
-		return 12 * salaireMensuelBrut;
-	}
-
-	private double calculerSalaireMensuelBrut(long tjm) {
-		double primesBrutBornees = calculerPrimesBrutBornees(tjm);
-
-		return salaireBrutDeBase + primesBrutBornees;
-	}
-
-	private double calculerPrimesBrutBornees(long tjm) {
-		double primesBrut = calculerPrimesBrut(tjm);
-		return Math.max(primesBrut, 0);
-	}
-
-	private double calculerPrimesBrut(long tjm) {
-		double chiffreAffaireMensuelGenerePartDeLIngenieur = chiffreAffaireMensuelGenerePartDeLIngenieur(tjm);
-
-		double coutSalaire = calculerCoutSalaire();
-
-		double primesHorsCharges = chiffreAffaireMensuelGenerePartDeLIngenieur
-				- coutSalaire;
-
-		return primesHorsCharges / tauxChargesSocialesPatronales;
-	}
-
-	private double calculerCoutSalaire() {
-		return salaireBrutDeBase * tauxChargesSocialesPatronales;
-	}
-
-	private double chiffreAffaireMensuelGenerePartDeLIngenieur(long tjm) {
+	
+	private double calculerChiffreAffaireMensuelGenerePartDeLIngenieur(long tjm) {
+		
 		double nbJoursTravaillesMensuelMoyen = nbJoursTravaillesAnnuels / 12;
 
 		double chiffreAffaireMensuelGenere = tjm
@@ -114,5 +94,35 @@ public class CalculateurSalaire {
 				* tauxPartageIngeEntreprise;
 		return chiffreAffaireMensuelGenerePartDeLIngenieur;
 	}
+	
+	private double calculerPrimesBrut(
+			double chiffreAffaireMensuelGenerePartDeLIngenieur) {
+
+		double coutSalaire = calculerCoutSalaire();
+
+		double primesHorsCharges = chiffreAffaireMensuelGenerePartDeLIngenieur
+				- coutSalaire;
+
+		return primesHorsCharges / tauxChargesSocialesPatronales;
+	}
+	
+	private double calculerCoutSalaire() {
+		return salaireBrutDeBase * tauxChargesSocialesPatronales;
+	}
+
+	private double calculerPrimesBrutBornees(double primesBrut) {
+		return Math.max(primesBrut, 0);
+	}
+	
+	private double calculerSalaireMensuelBrut(double primesBrutBornees) {
+		return salaireBrutDeBase + primesBrutBornees;
+	}
+
+	private double calculerSalaireAnnuelBrut(double salaireMensuelBrut) {
+		return 12 * salaireMensuelBrut;
+	}
+
+
+
 
 }
