@@ -26,6 +26,8 @@ public class Preferences extends PreferenceActivity {
 	}
 
 	private void resetToDefaultValues() {
+		
+		
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 		Editor edit = preferences.edit();
@@ -36,6 +38,7 @@ public class Preferences extends PreferenceActivity {
 				.putString("nbJoursTravaillesAnnuels", "219") //
 				.putString("tauxMargeCommerciale", "0.1") //
 				.commit();
+		finish();
 	}
 
 }
