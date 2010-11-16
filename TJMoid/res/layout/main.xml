@@ -4,9 +4,24 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<TextView  
+    <TextView 
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
-    android:text="@string/hello"
+    android:text="Salaire"
+	/>
+	<TextView 
+	android:id="@+id/salaireTextView"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:text="En euros annuels brut"
+	/>
+	<EditText  
+	android:id="@+id/tjmInput"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:hint="Entrez le TJM"
+    android:inputType="numberSigned"
     />
+
+        
 </LinearLayout>

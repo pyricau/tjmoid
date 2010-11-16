@@ -1,7 +1,5 @@
 package info.piwai.tjmoid;
 
-import java.math.BigDecimal;
-
 public class CalculateurSalaire {
 
 	public static class Builder {
@@ -66,7 +64,6 @@ public class CalculateurSalaire {
 
 	public long calculerSalaireBrut(long tjm) {
 
-		
 		double chiffreAffaireMensuelGenerePartDeLIngenieur = calculerChiffreAffaireMensuelGenerePartDeLIngenieur(tjm);
 
 		double primesBrut = calculerPrimesBrut(chiffreAffaireMensuelGenerePartDeLIngenieur);
@@ -79,9 +76,9 @@ public class CalculateurSalaire {
 
 		return Math.round(salaireAnnuelBrut);
 	}
-	
+
 	private double calculerChiffreAffaireMensuelGenerePartDeLIngenieur(long tjm) {
-		
+
 		double nbJoursTravaillesMensuelMoyen = nbJoursTravaillesAnnuels / 12;
 
 		double chiffreAffaireMensuelGenere = tjm
@@ -94,7 +91,7 @@ public class CalculateurSalaire {
 				* tauxPartageIngeEntreprise;
 		return chiffreAffaireMensuelGenerePartDeLIngenieur;
 	}
-	
+
 	private double calculerPrimesBrut(
 			double chiffreAffaireMensuelGenerePartDeLIngenieur) {
 
@@ -105,7 +102,7 @@ public class CalculateurSalaire {
 
 		return primesHorsCharges / tauxChargesSocialesPatronales;
 	}
-	
+
 	private double calculerCoutSalaire() {
 		return salaireBrutDeBase * tauxChargesSocialesPatronales;
 	}
@@ -113,7 +110,7 @@ public class CalculateurSalaire {
 	private double calculerPrimesBrutBornees(double primesBrut) {
 		return Math.max(primesBrut, 0);
 	}
-	
+
 	private double calculerSalaireMensuelBrut(double primesBrutBornees) {
 		return salaireBrutDeBase + primesBrutBornees;
 	}
@@ -121,8 +118,5 @@ public class CalculateurSalaire {
 	private double calculerSalaireAnnuelBrut(double salaireMensuelBrut) {
 		return 12 * salaireMensuelBrut;
 	}
-
-
-
 
 }
