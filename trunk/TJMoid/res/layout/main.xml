@@ -13,7 +13,6 @@
 	android:id="@+id/salaireTextView"
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content"
-    android:text="En euros annuels brut"
 	/>
 	<EditText  
 	android:id="@+id/tjmInput"
@@ -22,6 +21,4 @@
     android:hint="Entrez le TJM"
     android:inputType="numberSigned"
     />
-
-        
 </LinearLayout>
