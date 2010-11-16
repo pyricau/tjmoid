@@ -14,14 +14,12 @@ public class CalculateurSalaire {
 			return this;
 		}
 
-		public Builder tauxChargesSocialesPatronales(
-				double tauxChargesSocialesPatronales) {
+		public Builder tauxChargesSocialesPatronales(double tauxChargesSocialesPatronales) {
 			this.tauxChargesSocialesPatronales = tauxChargesSocialesPatronales;
 			return this;
 		}
 
-		public Builder tauxPartageIngeEntreprise(
-				double tauxPartageIngeEntreprise) {
+		public Builder tauxPartageIngeEntreprise(double tauxPartageIngeEntreprise) {
 			this.tauxPartageIngeEntreprise = tauxPartageIngeEntreprise;
 			return this;
 		}
@@ -37,8 +35,7 @@ public class CalculateurSalaire {
 		}
 
 		public CalculateurSalaire build() {
-			return new CalculateurSalaire(salaireBrutDeBase,
-					tauxChargesSocialesPatronales, tauxPartageIngeEntreprise,
+			return new CalculateurSalaire(salaireBrutDeBase, tauxChargesSocialesPatronales, tauxPartageIngeEntreprise,
 					tauxMargeCommerciale, nbJoursTravaillesAnnuels);
 		}
 
@@ -50,10 +47,8 @@ public class CalculateurSalaire {
 	private final double tauxMargeCommerciale;
 	private final double nbJoursTravaillesAnnuels;
 
-	private CalculateurSalaire(double salaireBrutDeBase,
-			double tauxChargesSocialesPatronales,
-			double tauxPartageIngeEntreprise, double tauxMargeCommerciale,
-			double nbJoursTravaillesAnnuels) {
+	private CalculateurSalaire(double salaireBrutDeBase, double tauxChargesSocialesPatronales,
+			double tauxPartageIngeEntreprise, double tauxMargeCommerciale, double nbJoursTravaillesAnnuels) {
 		this.salaireBrutDeBase = salaireBrutDeBase;
 		this.tauxChargesSocialesPatronales = tauxChargesSocialesPatronales;
 		this.tauxPartageIngeEntreprise = tauxPartageIngeEntreprise;
@@ -81,8 +76,7 @@ public class CalculateurSalaire {
 
 		double nbJoursTravaillesMensuelMoyen = nbJoursTravaillesAnnuels / 12;
 
-		double chiffreAffaireMensuelGenere = tjm
-				* nbJoursTravaillesMensuelMoyen;
+		double chiffreAffaireMensuelGenere = tjm * nbJoursTravaillesMensuelMoyen;
 
 		double chiffreAffaireMensuelGenereMoinsMargeCommerciale = chiffreAffaireMensuelGenere
 				* (1 - tauxMargeCommerciale);
@@ -92,13 +86,11 @@ public class CalculateurSalaire {
 		return chiffreAffaireMensuelGenerePartDeLIngenieur;
 	}
 
-	private double calculerPrimesBrut(
-			double chiffreAffaireMensuelGenerePartDeLIngenieur) {
+	private double calculerPrimesBrut(double chiffreAffaireMensuelGenerePartDeLIngenieur) {
 
 		double coutSalaire = calculerCoutSalaire();
 
-		double primesHorsCharges = chiffreAffaireMensuelGenerePartDeLIngenieur
-				- coutSalaire;
+		double primesHorsCharges = chiffreAffaireMensuelGenerePartDeLIngenieur - coutSalaire;
 
 		return primesHorsCharges / tauxChargesSocialesPatronales;
 	}
