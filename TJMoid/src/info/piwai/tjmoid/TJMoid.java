@@ -31,8 +31,10 @@ import android.widget.TextView;
 public class TJMoid extends Activity {
 
 	private EditText tjmInput;
-	private TextView salaireTextView;
-
+	private TextView salaireBrutAnnuelTextView;
+	private TextView salaireBrutMensuelTextView;
+	private TextView salaireNetMensuelTextView;
+	
 	private CalculateurSalaire calculateurSalaire;
 
 	/** Called when the activity is first created. */
@@ -42,7 +44,9 @@ public class TJMoid extends Activity {
 		setContentView(R.layout.main);
 
 		tjmInput = (EditText) findViewById(R.id.tjmInput);
-		salaireTextView = (TextView) findViewById(R.id.salaireTextView);
+		salaireBrutAnnuelTextView = (TextView) findViewById(R.id.salaireBrutAnnuelTextView);
+		salaireBrutMensuelTextView = (TextView) findViewById(R.id.salaireBrutMensuelTextView);
+		salaireNetMensuelTextView = (TextView) findViewById(R.id.salaireNetMensuelTextView);
 
 		calculateurSalaire = buildCalculateurSalaire();
 		
@@ -65,8 +69,14 @@ public class TJMoid extends Activity {
 			tjm = Long.parseLong(tjmString);
 		}
 
-		long salaireBrut = calculateurSalaire.calculerSalaireBrut(tjm);
-		salaireTextView.setText(salaireBrut + " euros bruts annuels");
+		long salaireBrutAnnuel = calculateurSalaire.calculerSalaireBrut(tjm);
+		salaireBrutAnnuelTextView.setText(salaireBrutAnnuel + " euros");
+		
+		long salaireBrutMensuel = salaireBrutAnnuel / 12;
+		salaireBrutMensuelTextView.setText(salaireBrutMensuel + " euros");
+		
+		long salaireNetMensuel = (long) (((double)salaireBrutMensuel) * 0.77);
+		salaireNetMensuelTextView.setText(salaireNetMensuel + " euros");
 	}
 
 	@Override
