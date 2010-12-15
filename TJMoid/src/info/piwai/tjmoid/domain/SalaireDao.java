@@ -1,6 +1,5 @@
 package info.piwai.tjmoid.domain;
 
-import info.piwai.tjmoid.JoursOuvres;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -107,16 +106,6 @@ public class SalaireDao {
 		values.put(TAUX_MARGE_COMMERCIALE, salaire.tauxMargeCommerciale);
 
 		return values;
-	}
-
-	private static List<SalaireMensuel> salairesFromCursor(Cursor cursor) {
-		List<SalaireMensuel> salaires = new ArrayList<SalaireMensuel>();
-		while (cursor.moveToNext()) {
-			SalaireMensuel salaire = salaireFromCursor(cursor);
-			salaires.add(salaire);
-		}
-		Collections.sort(salaires);
-		return salaires;
 	}
 
 	private static SalaireMensuel salaireFromCursor(Cursor cursor) {
