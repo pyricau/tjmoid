@@ -1,6 +1,5 @@
 package info.piwai.tjmoid.domain;
 
-import info.piwai.tjmoid.JoursOuvres;
 
 import java.util.ArrayList;
 import java.util.Calendar;
