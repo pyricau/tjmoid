@@ -25,6 +25,9 @@ import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -34,6 +37,7 @@ public class TJMoid extends Activity {
 	private TextView salaireBrutAnnuelTextView;
 	private TextView salaireBrutMensuelTextView;
 	private TextView salaireNetMensuelTextView;
+	private Button monthlySalaryButton;
 	
 	private CalculateurSalaire calculateurSalaire;
 
@@ -47,6 +51,8 @@ public class TJMoid extends Activity {
 		salaireBrutAnnuelTextView = (TextView) findViewById(R.id.salaireBrutAnnuelTextView);
 		salaireBrutMensuelTextView = (TextView) findViewById(R.id.salaireBrutMensuelTextView);
 		salaireNetMensuelTextView = (TextView) findViewById(R.id.salaireNetMensuelTextView);
+		
+		monthlySalaryButton= (Button) findViewById(R.id.monthlySalaryButton);
 
 		calculateurSalaire = buildCalculateurSalaire();
 		
@@ -56,18 +62,21 @@ public class TJMoid extends Activity {
 				onTjmChanged();
 			}
 		});
+		
+		monthlySalaryButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(TJMoid.this, MonthlySalaryActivity.class);
+				int defaultTjm = tjmFromInput();
+				intent.putExtra(MonthlySalaryActivity.DEFAULT_TJM_EXTRA, defaultTjm);
+				startActivity(intent);
+			}
+		});
 
 	}
 
 	private void onTjmChanged() {
-		String tjmString = tjmInput.getText().toString();
-
-		long tjm;
-		if ("".equals(tjmString)) {
-			tjm = 0;
-		} else {
-			tjm = Long.parseLong(tjmString);
-		}
+		int tjm = tjmFromInput();
 
 		long salaireBrutAnnuel = calculateurSalaire.calculerSalaireBrut(tjm);
 		salaireBrutAnnuelTextView.setText(salaireBrutAnnuel + " euros");
@@ -77,6 +86,18 @@ public class TJMoid extends Activity {
 		
 		long salaireNetMensuel = (long) (((double)salaireBrutMensuel) * 0.77);
 		salaireNetMensuelTextView.setText(salaireNetMensuel + " euros");
+	}
+
+	private int tjmFromInput() {
+		int tjm;
+		String tjmString = tjmInput.getText().toString();
+
+		if ("".equals(tjmString)) {
+			tjm = 0;
+		} else {
+			tjm = Integer.parseInt(tjmString);
+		}
+		return tjm;
 	}
 
 	@Override
