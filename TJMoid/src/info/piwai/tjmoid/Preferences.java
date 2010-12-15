@@ -42,18 +42,19 @@ public class Preferences extends PreferenceActivity {
 
 	private void resetToDefaultValues() {
 		
-		
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 		Editor edit = preferences.edit();
 
 		edit.putString("salaireBrutDeBase", "2584") //
 				.putString("tauxChargesSocialesPatronales", "1.58") //
-				.putString("tauxPartageIngeEntreprise", "0.6") //
+				.putString("tauxPartageSalarieEntreprise", "0.6") //
 				.putString("nbJoursTravaillesAnnuels", "219") //
 				.putString("tauxMargeCommerciale", "0.1") //
 				.commit();
 		finish();
 	}
+	
+	
 
 }
