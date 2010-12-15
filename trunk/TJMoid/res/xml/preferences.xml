@@ -9,7 +9,7 @@
 		android:key="tauxChargesSocialesPatronales" android:summary="Permet de déterminer le coût du salaire"
 		android:defaultValue="1.58" />
 	<EditTextPreference android:summary="Règle des 60/40"
-		android:title="Taux de partage Ingé / Entreprise" android:key="tauxPartageIngeEntreprise"
+		android:title="Taux de partage Salarié / Entreprise" android:key="tauxPartageSalarieEntreprise"
 		android:defaultValue="0.6" />
 	<EditTextPreference android:summary="Tel que défini dans le contrat de travail"
 		android:title="Nombre de jours travaillés par an" android:key="nbJoursTravaillesAnnuels"
