@@ -4,13 +4,20 @@
       android:versionCode="2"
       android:versionName="1.1">
     <application android:icon="@drawable/icon" android:label="@string/app_name">
-        <activity android:name=".TJMoid"
-                  android:label="@string/app_name">
+        <activity
+        	android:name=".TJMoid"
+        	android:screenOrientation="portrait"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+        	android:name=".MonthlySalaryActivity"
+        	android:screenOrientation="portrait"
+            android:label="Salaire exact" />
+        
 
     <activity android:name="Preferences"></activity>
 </application>

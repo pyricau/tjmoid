@@ -5,6 +5,18 @@
     android:layout_height="fill_parent"
     android:background="@drawable/frame_background">
     
+    <Spinner  
+		android:id="@+id/yearSelectSpinner"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:layout_margin="5dip"/>
+	    
+    <Spinner  
+		android:id="@+id/monthSelectSpinner"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:layout_margin="5dip"/>	    
+    
 	<EditText  
 		android:id="@+id/tjmInput"
 	    android:layout_width="fill_parent" 
@@ -18,14 +30,28 @@
     	android:layout_height="wrap_content"
     	android:src="@drawable/divider"
     	android:layout_margin="5dip"/>
+    	
+	<EditText  
+		android:id="@+id/congesInput"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:hint="Entrez le TJM"
+	    android:inputType="numberSigned"
+	    android:layout_margin="5dip"/>
+
+    <ImageView
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:src="@drawable/divider"
+    	android:layout_margin="5dip"/>    	
 	    
 	<TextView 
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content" 
-	    android:text="Brut annuel :"
+	    android:text="Fixe brut mensuel :"
 	    android:textColor="@color/label"/>
 	<TextView 
-		android:id="@+id/salaireBrutAnnuelTextView"
+		android:id="@+id/fixeBrutMensuelTextView"
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
 	    android:textColor="@color/value"
@@ -41,10 +67,10 @@
     <TextView
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
-    	android:text="Brut mensuel :"
+    	android:text="Primes brut mensuelles :"
     	android:textColor="@color/label"/>	
     <TextView
-    	android:id="@+id/salaireBrutMensuelTextView"
+    	android:id="@+id/primesBrutMensuellesTextView"
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
     	android:textColor="@color/value"
@@ -60,7 +86,26 @@
 	<TextView
     	android:layout_width="fill_parent"
     	android:layout_height="wrap_content"
-    	android:text="Net mensuel :"
+    	android:text="Total brut mensuel :"
+    	android:textColor="@color/label"/>	
+    <TextView
+    	android:id="@+id/totalBrutMensuelTextView"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:textColor="@color/value"
+    	android:gravity="right"
+    	android:textSize="16dip"/>
+    
+    <ImageView
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:src="@drawable/divider"
+    	android:layout_margin="5dip"/>
+
+	<TextView
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:text="Total net mensuel :"
     	android:textColor="@color/label"/>	
     <TextView
     	android:id="@+id/salaireNetMensuelTextView"
@@ -75,12 +120,5 @@
     	android:layout_height="wrap_content"
     	android:src="@drawable/divider"
     	android:layout_margin="5dip"/>
-    	
-   <Button 
-   		android:id="@+id/monthlySalaryButton"
-       	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content"
-    	android:text="Calcul exact du salaire"
-   />
     	
 </LinearLayout>

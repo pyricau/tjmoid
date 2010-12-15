@@ -134,7 +134,7 @@ public class SalaireDao {
 		helper = new MyHelper(context);
 	}
 
-	private SalaireMensuel newEmptySalaire(int year, int monthNumber) {
+	private SalaireMensuel newEmptySalaire(int year, int monthNumber, int defaultTjm) {
 		SalaireMensuel salaire = new SalaireMensuel();
 		salaire.year = year;
 		salaire.monthNumber = monthNumber;
@@ -143,11 +143,12 @@ public class SalaireDao {
 		salaire.tauxChargesSocialesPatronales = 1.58;
 		salaire.tauxPartageSalariéEntreprise = 0.6;
 		salaire.tauxMargeCommerciale = 0.1;
+		salaire.tjm = defaultTjm;
 		return salaire;
 	}
 
-	public SalaireMensuel find(int year, int monthNumber) {
-		SalaireMensuel salaire = findOne(year, monthNumber);
+	public SalaireMensuel find(int year, int monthNumber, int defaultTjm) {
+		SalaireMensuel salaire = findOne(year, monthNumber, defaultTjm);
 		
 		
 		List<SalaireMensuel> salairesSixDerniersMois = new ArrayList<SalaireMensuel>();
@@ -173,11 +174,11 @@ public class SalaireDao {
 			year--;
 		}
 		
-		return findOne(year, monthNumber);
+		return findOne(year, monthNumber, 0);
 	}
 	
 	
-	private SalaireMensuel findOne(int year, int monthNumber) {
+	private SalaireMensuel findOne(int year, int monthNumber, int defaultTjm) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		String[] arguments = {""+year, ""+monthNumber};
 		Cursor cursor = db.query(SALAIRE_TABLE, ALL_FIELDS, SELECT_ONE, arguments, NO_GROUP, NO_HAVING, NOT_ORDERED);
@@ -186,7 +187,7 @@ public class SalaireDao {
 		if (cursor.moveToNext()) {
 			salaire = salaireFromCursor(cursor);
 		} else {
-			salaire = newEmptySalaire(year, monthNumber);
+			salaire = newEmptySalaire(year, monthNumber, defaultTjm);
 			ContentValues values = salaireToContentValues(salaire);
 			db.insert(SALAIRE_TABLE, NULL_COLUMN_HACK, values);
 		}

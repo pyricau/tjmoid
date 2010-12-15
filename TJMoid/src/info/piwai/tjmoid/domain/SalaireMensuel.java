@@ -211,5 +211,9 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel>{
 	public double getPrimesLissées() {
 		return primesLissées;
 	}
+	
+	public double getTotalBrutMensuel() {
+		return calculerSalaireBrutDuMois() + primesLissées;
+	}
 
 }
