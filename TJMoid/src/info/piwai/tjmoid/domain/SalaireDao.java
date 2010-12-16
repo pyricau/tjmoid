@@ -186,12 +186,12 @@ public class SalaireDao {
 		SalaireMensuel salaire;
 		if (cursor.moveToNext()) {
 			salaire = salaireFromCursor(cursor);
-			cursor.close();
 		} else {
 			salaire = newEmptySalaire(year, monthNumber, defaultTjm);
 			ContentValues values = salaireToContentValues(salaire);
 			db.insert(SALAIRE_TABLE, NULL_COLUMN_HACK, values);
 		}
+		cursor.close();
 		return salaire;
 	}
 	
