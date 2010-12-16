@@ -1,11 +1,10 @@
 package info.piwai.tjmoid.domain;
 
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public final class SalaireMensuel implements Comparable<SalaireMensuel>{
+public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 
 	/**
 	 * Nécessaire pour calculer l'impact d'un CSS sur le brut
@@ -48,7 +47,7 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel>{
 	protected int tjm;
 
 	protected double tauxMargeCommerciale;
-	
+
 	/**
 	 * Not persisted
 	 */
@@ -65,19 +64,19 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel>{
 		}
 
 		if (nbJoursOuvres < 0 || nbJoursOuvres > 31) {
-			validationErrors.add("Le nombre de jours ouvrés doit être compris entre 0 et 31, il vaut: " + nbJoursOuvres);
+			validationErrors.add("Le nombre de jours ouvrés doit être compris entre 0 et 31, il vaut " + nbJoursOuvres);
 		}
 
 		if (nbConges < 0 || nbConges > nbJoursOuvres) {
-			validationErrors.add("Le nombre de congés doit être compris entre 0 et " + nbJoursOuvres + ", il vaut: " + nbConges);
+			validationErrors.add("Le nombre de congés doit être compris entre 0 et " + nbJoursOuvres + ", il vaut " + nbConges);
 		}
 
 		if (nbCongesSansSolde < 0 || nbCongesSansSolde > nbJoursOuvres) {
-			validationErrors.add("Le nombre de congés sans solde doit être compris entre 0 et " + nbJoursOuvres + ", il vaut: " + nbCongesSansSolde);
+			validationErrors.add("Le nombre de congés sans solde doit être compris entre 0 et " + nbJoursOuvres + ", il vaut " + nbCongesSansSolde);
 		}
 
 		if (nbJoursCommunautaires < 0 || nbJoursCommunautaires > nbJoursOuvres) {
-			validationErrors.add("Le nombre de jours communautaires doit être compris entre 0 et " + nbJoursOuvres + ", il vaut: " + nbJoursCommunautaires);
+			validationErrors.add("Le nombre de jours communautaires doit être compris entre 0 et " + nbJoursOuvres + ", il vaut " + nbJoursCommunautaires);
 		}
 
 		if (salaireBrutDeBase < 0) {
@@ -86,19 +85,19 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel>{
 		}
 
 		if (tauxChargesSocialesPatronales < 1) {
-			validationErrors.add("Le taux de charges sociales patronales doit être inférieur à 1, il vaut: " + tauxChargesSocialesPatronales);
+			validationErrors.add("Le taux de charges sociales patronales doit être inférieur à 1, il vaut " + tauxChargesSocialesPatronales);
 		}
 
 		if (tauxPartageSalariéEntreprise < 0 || tauxPartageSalariéEntreprise > 1) {
-			validationErrors.add("Le taux de partage salarié / entreprise doit être compris entre 0 et 1, il vaut: " + tauxPartageSalariéEntreprise);
+			validationErrors.add("Le taux de partage salarié / entreprise doit être compris entre 0 et 1, il vaut " + tauxPartageSalariéEntreprise);
 		}
 
 		if (tauxMargeCommerciale < 0 || tauxMargeCommerciale > 1) {
-			validationErrors.add("Le taux de marge commerciale doit être compris entre 0 et 1, il vaut: " + tauxMargeCommerciale);
+			validationErrors.add("Le taux de marge commerciale doit être compris entre 0 et 1, il vaut " + tauxMargeCommerciale);
 		}
 
 		if (tjm < 0) {
-			validationErrors.add("Le taux de facturation doit être supérieur ou égal à 0, il vaut: " + tjm);
+			validationErrors.add("Le taux de facturation doit être supérieur ou égal à 0, il vaut " + tjm);
 		}
 
 		if (nbJoursOuvres < nbConges + nbCongesSansSolde + nbJoursCommunautaires) {
@@ -106,10 +105,7 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel>{
 			validationErrors.add(String.format(format, nbJoursOuvres, nbConges, nbCongesSansSolde, nbJoursCommunautaires));
 		}
 	}
-	
-	
-	
-	
+
 	public int calculerPrimesLissées(List<SalaireMensuel> salairesSixDerniersMois) {
 		if (salairesSixDerniersMois.size() != 6) {
 			throw new IllegalArgumentException("Il faut 6 mois de salaire !");
@@ -120,15 +116,16 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel>{
 		for (SalaireMensuel salaireMensuel : salairesSixDerniersMois) {
 			sommeChiffresAffairesPourPrimes += salaireMensuel.calculerChiffreAffairePourPrimes();
 		}
-		
+
 		double chiffreAffairePourPrimeMoyen = sommeChiffresAffairesPourPrimes / 6;
-		
+
 		double primesExactes = chiffreAffairePourPrimeMoyen / tauxChargesSocialesPatronales;
-		
-		//TODO la différence entre l'arrondi et l'exact est normalement reportée au mois suivant
-		int primesArrondies = (int)Math.round(primesExactes);
-		
-		return primesArrondies;
+
+		// TODO la différence entre l'arrondi et l'exact est normalement
+		// reportée au mois suivant
+		int primesArrondies = (int) Math.round(primesExactes);
+
+		return Math.max(primesArrondies, 0);
 	}
 
 	private double calculerChiffreAffairePourPrimes() {
@@ -151,7 +148,7 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel>{
 		validate(validationErrors);
 
 		if (validationErrors.size() > 0) {
-			throw new IllegalStateException("Should not to compute CA without resolving validation errors first: " + validationErrors);
+			throw new IllegalStateException("Should not compute CA without resolving validation errors first: " + validationErrors);
 		}
 	}
 
@@ -163,10 +160,14 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel>{
 		double salaireBrutDuMois = salaireBrutDeBase - retraitCongesSansSolde;
 		return salaireBrutDuMois;
 	}
-	
-
 
 	private double calculerChiffreAffairePourSalarié(double salaireBrutDuMois) {
+		double chiffreAffaireGenere = calculerChiffreAffaireGénéré(salaireBrutDuMois);
+
+		return tauxPartageSalariéEntreprise * chiffreAffaireGenere;
+	}
+
+	private double calculerChiffreAffaireGénéré(double salaireBrutDuMois) {
 		int nbJoursFacturés = calculerNbJoursFacturés();
 		double chiffreAffaireFacturation = (1 - tauxMargeCommerciale) * (tjm * nbJoursFacturés);
 
@@ -175,20 +176,18 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel>{
 		double chiffreAffaireCommunautaire = (salaireBrutDuMois * tauxJoursCommunautaires) * tauxChargesSocialesPatronales / tauxPartageSalariéEntreprise;
 
 		double chiffreAffaireGenere = chiffreAffaireFacturation + chiffreAffaireCommunautaire + chiffreAffaireManuel;
-
-		double chiffreAffairePourSalarie = tauxPartageSalariéEntreprise * chiffreAffaireGenere;
-		return chiffreAffairePourSalarie;
+		return chiffreAffaireGenere;
 	}
-	
+
 	private int calculerNbJoursFacturés() {
-		return nbJoursOuvres-(nbConges+nbCongesSansSolde+nbJoursCommunautaires);
-	}
-	
-	public void updatePrimeLissées(List<SalaireMensuel> salairesSixDerniersMois) {
-		this.primesLissées= calculerPrimesLissées(salairesSixDerniersMois);
+		return nbJoursOuvres - (nbConges + nbCongesSansSolde + nbJoursCommunautaires);
 	}
 
-	public double calculerChiffreAffairePourSalarié() {
+	public void updatePrimeLissées(List<SalaireMensuel> salairesSixDerniersMois) {
+		this.primesLissées = calculerPrimesLissées(salairesSixDerniersMois);
+	}
+
+	private double calculerChiffreAffairePourSalarié() {
 		validateOrThrow();
 
 		double salaireBrutDuMois = calculerSalaireBrutDuMois();
@@ -198,22 +197,74 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel>{
 
 	@Override
 	public int compareTo(SalaireMensuel another) {
-		
+
 		int compared = Integer.valueOf(year).compareTo(another.year);
-		
-		if (compared==0) {
+
+		if (compared == 0) {
 			compared = Integer.valueOf(monthNumber).compareTo(another.monthNumber);
 		}
-		
+
 		return compared;
 	}
 
 	public double getPrimesLissées() {
 		return primesLissées;
 	}
-	
+
 	public double getTotalBrutMensuel() {
 		return calculerSalaireBrutDuMois() + primesLissées;
+	}
+
+	public String getTjmAsString() {
+		return tjm + "";
+	}
+
+	public void setTjmAsString(String tjm) {
+		this.tjm = intFromString(tjm);
+	}
+
+	public boolean tjmChanged(String tjm) {
+		return intFromString(tjm) != this.tjm;
+	}
+
+	public String getCongesAsString() {
+		return nbConges + "";
+	}
+
+	public void setCongesAsString(String nbConges) {
+		this.nbConges = intFromString(nbConges);
+	}
+
+	public boolean congesChanged(String nbConges) {
+		return intFromString(nbConges) != this.nbConges;
+	}
+
+	private static int intFromString(String intString) {
+		int intValue;
+		if ("".equals(intString)) {
+			intValue = 0;
+		} else if ("-".equals(intString)) {
+			intValue = 0;
+		} else {
+			intValue = Integer.parseInt(intString);
+		}
+		return intValue;
+	}
+
+	public double getFixeBrutMensuel() {
+		return calculerSalaireBrutDuMois();
+	}
+
+	public double getPrimesBrutMensuelles() {
+		return primesLissées;
+	}
+
+	public double getTotalNetMensuel() {
+		return getFixeBrutMensuel() * 0.77;
+	}
+	
+	public double getChiffreAffaireGenere() {
+		return calculerChiffreAffaireGénéré(calculerSalaireBrutDuMois());
 	}
 
 }
