@@ -187,14 +187,6 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 		this.primesLissées = calculerPrimesLissées(salairesSixDerniersMois);
 	}
 
-	private double calculerChiffreAffairePourSalarié() {
-		validateOrThrow();
-
-		double salaireBrutDuMois = calculerSalaireBrutDuMois();
-
-		return calculerChiffreAffairePourSalarié(salaireBrutDuMois);
-	}
-
 	@Override
 	public int compareTo(SalaireMensuel another) {
 
@@ -214,6 +206,30 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 	public double getTotalBrutMensuel() {
 		return calculerSalaireBrutDuMois() + primesLissées;
 	}
+	
+	public String getCssAsString() {
+		return nbCongesSansSolde + "";
+	}
+
+	public void setCssAsString(String css) {
+		this.nbCongesSansSolde = intFromString(css);
+	}
+
+	public boolean cssChanged(String css) {
+		return intFromString(css) != this.nbCongesSansSolde;
+	}
+	
+	public String getCaManuelAsString() {
+		return chiffreAffaireManuel + "";
+	}
+
+	public void setCaManuelAsString(String caManuel) {
+		this.chiffreAffaireManuel = doubleFromString(caManuel);
+	}
+
+	public boolean caManuelChanged(String caManuel) {
+		return doubleFromString(caManuel) != this.chiffreAffaireManuel;
+	}
 
 	public String getTjmAsString() {
 		return tjm + "";
@@ -226,7 +242,7 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 	public boolean tjmChanged(String tjm) {
 		return intFromString(tjm) != this.tjm;
 	}
-
+	
 	public String getCongesAsString() {
 		return nbConges + "";
 	}
@@ -239,16 +255,22 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 		return intFromString(nbConges) != this.nbConges;
 	}
 
-	private static int intFromString(String intString) {
-		int intValue;
-		if ("".equals(intString)) {
-			intValue = 0;
-		} else if ("-".equals(intString)) {
-			intValue = 0;
-		} else {
-			intValue = Integer.parseInt(intString);
+	private static int intFromString(String value) {
+		value = value.trim();
+		try {
+			return Integer.parseInt(value);
+		} catch(NumberFormatException e) {
+			return 0;
 		}
-		return intValue;
+	}
+	
+	private static double doubleFromString(String value) {
+		value = value.trim();
+		try {
+			return Double.parseDouble(value);
+		} catch(NumberFormatException e) {
+			return 0;
+		}
 	}
 
 	public double getFixeBrutMensuel() {

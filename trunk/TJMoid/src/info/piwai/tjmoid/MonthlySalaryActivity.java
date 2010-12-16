@@ -41,6 +41,8 @@ public class MonthlySalaryActivity extends Activity {
 	private TextView primesBrutMensuellesTextView;
 	private TextView totalNetMensuelTextView;
 	private TextView caGenereTextView;
+	private EditText cssInput;
+	private EditText caManuelInput;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +84,26 @@ public class MonthlySalaryActivity extends Activity {
 				String conges = s.toString();
 				if (salaire.congesChanged(conges)) {
 					salaire.setCongesAsString(conges);
+					validateAndUpdate();
+				}
+			}
+		});
+		cssInput.addTextChangedListener(new AbstractTextWatcher() {
+			@Override
+			public void afterTextChanged(Editable s) {
+				String css = s.toString();
+				if (salaire.cssChanged(css)) {
+					salaire.setCssAsString(css);
+					validateAndUpdate();
+				}
+			}
+		});
+		caManuelInput.addTextChangedListener(new AbstractTextWatcher() {
+			@Override
+			public void afterTextChanged(Editable s) {
+				String caManuel = s.toString();
+				if (salaire.caManuelChanged(caManuel)) {
+					salaire.setCaManuelAsString(caManuel);
 					validateAndUpdate();
 				}
 			}
@@ -133,6 +155,10 @@ public class MonthlySalaryActivity extends Activity {
 		monthSelectSpinner = (Spinner) findViewById(R.id.monthSelectSpinner);
 		tjmInput = (EditText) findViewById(R.id.tjmInput);
 		congesInput = (EditText) findViewById(R.id.congesInput);
+		cssInput = (EditText) findViewById(R.id.cssInput);
+		caManuelInput = (EditText) findViewById(R.id.caManuelInput);
+		
+		
 		totalBrutMensuelTextView = (TextView) findViewById(R.id.totalBrutMensuelTextView);
 		totalNetMensuelTextView = (TextView) findViewById(R.id.totalNetMensuelTextView);
 		fixeBrutMensuelTextView= (TextView) findViewById(R.id.fixeBrutMensuelTextView);
@@ -157,6 +183,14 @@ public class MonthlySalaryActivity extends Activity {
 		
 		if (salaire.congesChanged(congesInput.getText().toString())) {
 			congesInput.setText(salaire.getCongesAsString());
+		}
+		
+		if (salaire.cssChanged(cssInput.getText().toString())) {
+			cssInput.setText(salaire.getCssAsString());
+		}
+		
+		if (salaire.caManuelChanged(caManuelInput.getText().toString())) {
+			caManuelInput.setText(salaire.getCaManuelAsString());
 		}
 	}
 
