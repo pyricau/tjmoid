@@ -7,6 +7,8 @@ import info.piwai.tjmoid.domain.SalaireMensuel;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,7 +20,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class MonthlySalaryActivity extends Activity {
+public class MonthlySalaryActivity extends TrackingActivity {
 
 	public static final String DEFAULT_TJM_EXTRA = "default_tjm_extra";
 	private int defaultTjm;
@@ -130,6 +132,7 @@ public class MonthlySalaryActivity extends Activity {
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
 				selectedYear = allowedYears[position];
 				updateViewsFromSelectedMonth();
+				getTracker().trackEvent("Spinner", "Change", "Year", selectedYear.getAnnee());
 			}
 
 			@Override
@@ -142,6 +145,7 @@ public class MonthlySalaryActivity extends Activity {
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
 				selectedMonth = position;
 				updateViewsFromSelectedMonth();
+				getTracker().trackEvent("Spinner", "Change", "Month", selectedMonth);
 			}
 
 			@Override
@@ -157,11 +161,10 @@ public class MonthlySalaryActivity extends Activity {
 		congesInput = (EditText) findViewById(R.id.congesInput);
 		cssInput = (EditText) findViewById(R.id.cssInput);
 		caManuelInput = (EditText) findViewById(R.id.caManuelInput);
-		
-		
+
 		totalBrutMensuelTextView = (TextView) findViewById(R.id.totalBrutMensuelTextView);
 		totalNetMensuelTextView = (TextView) findViewById(R.id.totalNetMensuelTextView);
-		fixeBrutMensuelTextView= (TextView) findViewById(R.id.fixeBrutMensuelTextView);
+		fixeBrutMensuelTextView = (TextView) findViewById(R.id.fixeBrutMensuelTextView);
 		primesBrutMensuellesTextView = (TextView) findViewById(R.id.primesBrutMensuellesTextView);
 		caGenereTextView = (TextView) findViewById(R.id.caGenereTextView);
 		errors = (TextView) findViewById(R.id.errors);
@@ -172,23 +175,23 @@ public class MonthlySalaryActivity extends Activity {
 
 		totalBrutMensuelTextView.setText(salaire.getTotalBrutMensuel() + "€");
 		totalNetMensuelTextView.setText(salaire.getTotalNetMensuel() + "€");
-		fixeBrutMensuelTextView.setText(salaire.getFixeBrutMensuel()+"€");
-		primesBrutMensuellesTextView.setText(salaire.getPrimesBrutMensuelles()+"€");
-		
-		caGenereTextView.setText(salaire.getChiffreAffaireGenere()+"€");
+		fixeBrutMensuelTextView.setText(salaire.getFixeBrutMensuel() + "€");
+		primesBrutMensuellesTextView.setText(salaire.getPrimesBrutMensuelles() + "€");
+
+		caGenereTextView.setText(salaire.getChiffreAffaireGenere() + "€");
 
 		if (salaire.tjmChanged(tjmInput.getText().toString())) {
 			tjmInput.setText(salaire.getTjmAsString());
 		}
-		
+
 		if (salaire.congesChanged(congesInput.getText().toString())) {
 			congesInput.setText(salaire.getCongesAsString());
 		}
-		
+
 		if (salaire.cssChanged(cssInput.getText().toString())) {
 			cssInput.setText(salaire.getCssAsString());
 		}
-		
+
 		if (salaire.caManuelChanged(caManuelInput.getText().toString())) {
 			caManuelInput.setText(salaire.getCaManuelAsString());
 		}
@@ -204,7 +207,7 @@ public class MonthlySalaryActivity extends Activity {
 			updateViewsFromSelectedMonth();
 		} else {
 			StringBuilder sb = new StringBuilder();
-			for(String validationError : validationErrors) {
+			for (String validationError : validationErrors) {
 				sb.append(validationError).append("\n");
 			}
 			errors.setText(sb);
