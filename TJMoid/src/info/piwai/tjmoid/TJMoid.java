@@ -31,7 +31,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class TJMoid extends Activity {
+public class TJMoid extends TrackingActivity {
 
 	private EditText tjmInput;
 	private TextView salaireBrutAnnuelTextView;
@@ -72,7 +72,7 @@ public class TJMoid extends Activity {
 				startActivity(intent);
 			}
 		});
-
+		
 	}
 
 	private void onTjmChanged() {
