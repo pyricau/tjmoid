@@ -51,7 +51,7 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 	/**
 	 * Not persisted
 	 */
-	private transient double primesLissées;
+	private transient int primesLissées;
 
 	public void validate(List<String> validationErrors) {
 
@@ -199,12 +199,8 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 		return compared;
 	}
 
-	public double getPrimesLissées() {
-		return primesLissées;
-	}
-
-	public double getTotalBrutMensuel() {
-		return calculerSalaireBrutDuMois() + primesLissées;
+	public String getTotalBrutMensuel() {
+		return Math.round(calculerSalaireBrutDuMois() + primesLissées)+"€";
 	}
 	
 	public String getCssAsString() {
@@ -273,20 +269,20 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 		}
 	}
 
-	public double getFixeBrutMensuel() {
-		return calculerSalaireBrutDuMois();
+	public String getFixeBrutMensuel() {
+		return Math.round(calculerSalaireBrutDuMois())+"€";
 	}
 
-	public double getPrimesBrutMensuelles() {
-		return primesLissées;
+	public String getPrimesBrutMensuelles() {
+		return primesLissées+"€";
 	}
 
-	public double getTotalNetMensuel() {
-		return getFixeBrutMensuel() * 0.77;
+	public String getTotalNetMensuel() {
+		return Math.round(calculerSalaireBrutDuMois() * 0.77)+"€";
 	}
 	
-	public double getChiffreAffaireGenere() {
-		return calculerChiffreAffaireGénéré(calculerSalaireBrutDuMois());
+	public String getChiffreAffaireGenere() {
+		return calculerChiffreAffaireGénéré(calculerSalaireBrutDuMois())+"€";
 	}
 
 }

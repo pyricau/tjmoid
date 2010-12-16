@@ -173,12 +173,11 @@ public class MonthlySalaryActivity extends TrackingActivity {
 	private void updateViewsFromSelectedMonth() {
 		salaire = salaireDao.find(selectedYear.getAnnee(), selectedMonth, defaultTjm);
 
-		totalBrutMensuelTextView.setText(salaire.getTotalBrutMensuel() + "€");
-		totalNetMensuelTextView.setText(salaire.getTotalNetMensuel() + "€");
-		fixeBrutMensuelTextView.setText(salaire.getFixeBrutMensuel() + "€");
-		primesBrutMensuellesTextView.setText(salaire.getPrimesBrutMensuelles() + "€");
-
-		caGenereTextView.setText(salaire.getChiffreAffaireGenere() + "€");
+		totalBrutMensuelTextView.setText(salaire.getTotalBrutMensuel());
+		totalNetMensuelTextView.setText(salaire.getTotalNetMensuel());
+		fixeBrutMensuelTextView.setText(salaire.getFixeBrutMensuel());
+		primesBrutMensuellesTextView.setText(salaire.getPrimesBrutMensuelles());
+		caGenereTextView.setText(salaire.getChiffreAffaireGenere());
 
 		if (salaire.tjmChanged(tjmInput.getText().toString())) {
 			tjmInput.setText(salaire.getTjmAsString());
