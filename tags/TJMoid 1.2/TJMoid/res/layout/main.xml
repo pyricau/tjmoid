@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/frame_background">
+    
+	<EditText  
+		android:id="@+id/tjmInput"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:hint="Entrez le TJM"
+	    android:inputType="numberSigned"
+	    android:layout_margin="5dip"/>
+
+    <ImageView
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:src="@drawable/divider"
+    	android:layout_margin="5dip"/>
+	    
+	<TextView 
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:text="Brut annuel :"
+	    android:textColor="@color/label"/>
+	<TextView 
+		android:id="@+id/salaireBrutAnnuelTextView"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:textColor="@color/value"
+	    android:gravity="right"
+	    android:textSize="16dip"/>
+    
+    <ImageView
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:src="@drawable/divider"
+    	android:layout_margin="5dip"/>
+    
+    <TextView
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:text="Brut mensuel :"
+    	android:textColor="@color/label"/>	
+    <TextView
+    	android:id="@+id/salaireBrutMensuelTextView"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:textColor="@color/value"
+    	android:gravity="right"
+    	android:textSize="16dip"/>
+    	
+    <ImageView
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:src="@drawable/divider"
+    	android:layout_margin="5dip"/>
+
+	<TextView
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:text="Net mensuel :"
+    	android:textColor="@color/label"/>	
+    <TextView
+    	android:id="@+id/salaireNetMensuelTextView"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:textColor="@color/value"
+    	android:gravity="right"
+    	android:textSize="16dip"/>
+    
+    <ImageView
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:src="@drawable/divider"
+    	android:layout_margin="5dip"/>
+    	
+   <Button 
+   		android:id="@+id/monthlySalaryButton"
+       	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:text="Calcul exact du salaire"
+   />
+    	
+</LinearLayout>
