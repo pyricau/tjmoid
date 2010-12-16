@@ -15,6 +15,7 @@
 	    android:layout_margin="5dip"
 	    
 	    android:layout_alignParentTop="true"
+	    android:layout_alignParentRight="true"
 	    />
     
     <Spinner  
@@ -23,7 +24,7 @@
 	    android:layout_height="wrap_content" 
 	   	android:layout_marginLeft="5dip"
 	    
-	   	android:layout_toRightOf="@id/yearSelectSpinner"
+	   	android:layout_toLeftOf="@id/yearSelectSpinner"
 	    android:layout_alignTop="@id/yearSelectSpinner"
 	    />
 	    
