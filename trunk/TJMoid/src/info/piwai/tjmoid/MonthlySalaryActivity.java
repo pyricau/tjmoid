@@ -38,6 +38,7 @@ public class MonthlySalaryActivity extends TrackingActivity {
 	private SalaireMensuel salaire;
 	private TextView fixeBrutMensuelTextView;
 	private TextView primesBrutMensuellesTextView;
+	private TextView primesNonLisseesTextView;
 	private TextView totalNetMensuelTextView;
 	private TextView caGenereTextView;
 	private EditText cssInput;
@@ -163,6 +164,7 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		totalNetMensuelTextView = (TextView) findViewById(R.id.totalNetMensuelTextView);
 		fixeBrutMensuelTextView = (TextView) findViewById(R.id.fixeBrutMensuelTextView);
 		primesBrutMensuellesTextView = (TextView) findViewById(R.id.primesBrutMensuellesTextView);
+		primesNonLisseesTextView = (TextView) findViewById(R.id.primesNonLisseesTextView);
 		caGenereTextView = (TextView) findViewById(R.id.caGenereTextView);
 		errors = (TextView) findViewById(R.id.errors);
 	}
@@ -174,6 +176,7 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		totalNetMensuelTextView.setText(salaire.getTotalNetMensuel());
 		fixeBrutMensuelTextView.setText(salaire.getFixeBrutMensuel());
 		primesBrutMensuellesTextView.setText(salaire.getPrimesBrutMensuelles());
+		primesNonLisseesTextView.setText(salaire.getPrimesNonLissées());
 		caGenereTextView.setText(salaire.getChiffreAffaireGenere());
 
 		if (salaire.tjmChanged(tjmInput.getText().toString())) {

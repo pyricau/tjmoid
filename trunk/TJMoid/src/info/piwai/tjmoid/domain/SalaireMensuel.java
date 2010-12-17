@@ -101,7 +101,7 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 		}
 
 		if (nbJoursOuvres < nbConges + nbCongesSansSolde + nbJoursCommunautaires) {
-			String format = "Le nombre de jours ouvrés (%d) est inférieur à la somme des congés (%d), congés sans soldes (%d) et jours communautaires (%d)";
+			String format = "Le nombre de jours ouvrés (%f) est inférieur à la somme des congés (%f), congés sans soldes (%f) et jours communautaires (%f)";
 			validationErrors.add(String.format(format, nbJoursOuvres, nbConges, nbCongesSansSolde, nbJoursCommunautaires));
 		}
 	}
@@ -283,6 +283,14 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 	
 	public String getChiffreAffaireGenere() {
 		return calculerChiffreAffaireGénéré(calculerSalaireBrutDuMois())+"€";
+	}
+
+	public String getPrimesNonLissées() {
+		return Math.round(calculerPrimesNonLissées())+"€";
+	}
+	
+	private double calculerPrimesNonLissées() {
+		return calculerChiffreAffairePourPrimes()/tauxChargesSocialesPatronales;
 	}
 
 }
