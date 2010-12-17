@@ -3,7 +3,6 @@ package info.piwai.tjmoid.domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 
 import android.content.ContentValues;
@@ -138,10 +137,7 @@ public class SalaireDao {
 
 	private final MyHelper helper;
 
-	private final Context context;
-
 	public SalaireDao(Context context) {
-		this.context = context;
 		helper = new MyHelper(context);
 	}
 
