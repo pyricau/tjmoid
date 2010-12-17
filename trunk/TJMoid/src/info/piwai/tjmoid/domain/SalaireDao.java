@@ -11,6 +11,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 public class SalaireDao {
 
@@ -30,7 +31,7 @@ public class SalaireDao {
 	private static final String TJM = "tjm";
 	private static final String TAUX_MARGE_COMMERCIALE = "tauxMargeCommerciale";
 
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	private static final String DATABASE_CREATE = //
 	"create table " + SALAIRE_TABLE //
@@ -39,13 +40,13 @@ public class SalaireDao {
 			+ "," //
 			+ YEAR_KEY + " integer not null" //
 			+ "," //
-			+ NB_JOURS_OUVRES_KEY + " integer not null" //
+			+ NB_JOURS_OUVRES_KEY + " float not null" //
 			+ "," //
-			+ NB_CONGES_KEY + " integer not null" //
+			+ NB_CONGES_KEY + " float not null" //
 			+ "," //
-			+ NB_CONGES_SANS_SOLDE_KEY + " integer not null" //
+			+ NB_CONGES_SANS_SOLDE_KEY + " float not null" //
 			+ "," //
-			+ NB_JOURS_COMMUNAUTAIRES_KEY + " integer not null" //
+			+ NB_JOURS_COMMUNAUTAIRES_KEY + " float not null" //
 			+ "," //
 			+ CA_MANUEL_KEY + " float not null" //
 			+ "," //
@@ -74,9 +75,12 @@ public class SalaireDao {
 	
 
 	public static class MyHelper extends SQLiteOpenHelper {
+		
+		private final Context context;
 
 		public MyHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
+			this.context = context;
 		}
 
 		@Override
@@ -86,6 +90,13 @@ public class SalaireDao {
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+			
+			if (newVersion==2) {
+				db.execSQL("DROP TABLE "+DATABASE_NAME);
+				onCreate(db);
+				Toast.makeText(context, "La mise à jour nécessite d'effacer les données stockées en base. Désolé !", Toast.LENGTH_LONG).show();
+			}
+			
 			// Do something if needed
 		}
 	}
