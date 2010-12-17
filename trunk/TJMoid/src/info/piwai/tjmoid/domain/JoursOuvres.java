@@ -1,7 +1,5 @@
 package info.piwai.tjmoid.domain;
 
-import java.util.ArrayList;
-
 public enum JoursOuvres {
 
 	YEAR_2008(2008, 22, 21, 20, 22, 19, 21, 22, 20, 22, 23, 19, 22), //
@@ -52,13 +50,13 @@ public enum JoursOuvres {
 	public int getAnnee() {
 		return annee;
 	}
-	
+
 	public static JoursOuvres[] allowedValues() {
 		JoursOuvres[] values = values();
-		JoursOuvres[] allowed = new JoursOuvres[values.length-1];
-		
-		for(int i=1;i<values.length; i++) {
-			allowed[i-1] = values[i];
+		JoursOuvres[] allowed = new JoursOuvres[values.length - 1];
+
+		for (int i = 1; i < values.length; i++) {
+			allowed[i - 1] = values[i];
 		}
 		return allowed;
 	}
