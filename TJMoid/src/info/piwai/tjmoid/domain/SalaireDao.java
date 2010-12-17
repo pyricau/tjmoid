@@ -90,13 +90,6 @@ public class SalaireDao {
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			
-			if (newVersion==2) {
-				db.execSQL("DROP TABLE "+DATABASE_NAME);
-				onCreate(db);
-				Toast.makeText(context, "La mise à jour nécessite d'effacer les données stockées en base. Désolé !", Toast.LENGTH_LONG).show();
-			}
-			
-			// Do something if needed
 		}
 	}
 
@@ -122,10 +115,10 @@ public class SalaireDao {
 		SalaireMensuel salaire = new SalaireMensuel();
 		salaire.monthNumber = cursor.getInt(cursor.getColumnIndex(MONTH_NUMBER_KEY));
 		salaire.year = cursor.getInt(cursor.getColumnIndex(YEAR_KEY));
-		salaire.nbJoursOuvres = cursor.getInt(cursor.getColumnIndex(NB_JOURS_OUVRES_KEY));
-		salaire.nbConges = cursor.getInt(cursor.getColumnIndex(NB_CONGES_KEY));
-		salaire.nbCongesSansSolde = cursor.getInt(cursor.getColumnIndex(NB_CONGES_SANS_SOLDE_KEY));
-		salaire.nbJoursCommunautaires = cursor.getInt(cursor.getColumnIndex(NB_JOURS_COMMUNAUTAIRES_KEY));
+		salaire.nbJoursOuvres = cursor.getDouble(cursor.getColumnIndex(NB_JOURS_OUVRES_KEY));
+		salaire.nbConges = cursor.getDouble(cursor.getColumnIndex(NB_CONGES_KEY));
+		salaire.nbCongesSansSolde = cursor.getDouble(cursor.getColumnIndex(NB_CONGES_SANS_SOLDE_KEY));
+		salaire.nbJoursCommunautaires = cursor.getDouble(cursor.getColumnIndex(NB_JOURS_COMMUNAUTAIRES_KEY));
 		salaire.chiffreAffaireManuel = cursor.getDouble(cursor.getColumnIndex(CA_MANUEL_KEY));
 		salaire.salaireBrutDeBase = cursor.getDouble(cursor.getColumnIndex(SALAIRE_BRUT_DE_BASE_KEY));
 		salaire.tauxChargesSocialesPatronales = cursor.getDouble(cursor.getColumnIndex(TAUX_CHARGES_SOCIALES_PATRONALES));

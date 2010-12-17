@@ -208,11 +208,11 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 	}
 
 	public void setCssAsString(String css) {
-		this.nbCongesSansSolde = intFromString(css);
+		this.nbCongesSansSolde = doubleFromString(css);
 	}
 
 	public boolean cssChanged(String css) {
-		return intFromString(css) != this.nbCongesSansSolde;
+		return doubleFromString(css) != this.nbCongesSansSolde;
 	}
 	
 	public String getCaManuelAsString() {
@@ -244,11 +244,11 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 	}
 
 	public void setCongesAsString(String nbConges) {
-		this.nbConges = intFromString(nbConges);
+		this.nbConges = doubleFromString(nbConges);
 	}
 
 	public boolean congesChanged(String nbConges) {
-		return intFromString(nbConges) != this.nbConges;
+		return doubleFromString(nbConges) != this.nbConges;
 	}
 
 	private static int intFromString(String value) {
