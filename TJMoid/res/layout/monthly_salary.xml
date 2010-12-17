@@ -359,6 +359,37 @@
 	    	
 	    	android:layout_below="@id/label5"
 	    	/>    	
+		<TextView
+	    	android:id="@+id/label6"	
+	    	android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:text="Primes brut non lissées"
+	    	android:textColor="@color/label"
+		    
+		    android:layout_below="@id/div7"
+		    />	
+	    <TextView
+	    	android:id="@+id/primesNonLisseesTextView"
+	    	android:layout_width="fill_parent"
+	    	android:layout_height="wrap_content"
+	    	android:textColor="@color/value"
+	    	android:gravity="right"
+	    	android:textSize="16dip"
+		    
+		    android:text="200€"
+		    android:layout_toRightOf="@id/label6"
+		    android:layout_alignTop="@id/label6"
+		    />
+	    
+	    <ImageView
+	        android:id="@+id/div8"    
+	    	android:layout_width="fill_parent"
+	    	android:layout_height="wrap_content"
+	    	android:src="@drawable/divider"
+	    	android:layout_margin="5dip"
+	    	
+	    	android:layout_below="@id/label6"
+	    	/>    		    	
 	    	
 	</RelativeLayout>
 </ScrollView>
