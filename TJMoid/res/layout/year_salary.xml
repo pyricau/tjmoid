@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+	xmlns:myapp="http://schemas.android.com/apk/res/info.piwai.tjmoid"
+	xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -18,6 +20,22 @@
     	android:layout_height="wrap_content"
     	android:src="@drawable/divider"
     	android:layout_margin="5dip"/>
+    	
+	<com.admob.android.ads.AdView
+		android:id="@+id/ad"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		myapp:backgroundColor="#FFFFFF"
+		myapp:primaryTextColor="#000000"
+		myapp:secondaryTextColor="#CCCCCC"
+		myapp:keywords="finance facturation euros"
+		/>    	
+		
+    <ImageView
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:src="@drawable/divider"
+    	android:layout_margin="5dip"/>		
 	    
 	<TextView 
 	    android:layout_width="fill_parent" 

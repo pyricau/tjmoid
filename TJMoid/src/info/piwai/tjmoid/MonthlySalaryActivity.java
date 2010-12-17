@@ -7,9 +7,6 @@ import info.piwai.tjmoid.domain.SalaireMensuel;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.android.apps.analytics.GoogleAnalyticsTracker;
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
