@@ -16,12 +16,12 @@
 package info.piwai.tjmoid;
 
 import info.piwai.tjmoid.CalculateurSalaire.Builder;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
@@ -31,48 +31,77 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class TJMoid extends TrackingActivity {
+import com.admob.android.ads.AdView;
+import com.admob.android.ads.SimpleAdListener;
+
+public class YearSalaryActivity extends TrackingActivity {
 
 	private EditText tjmInput;
 	private TextView salaireBrutAnnuelTextView;
 	private TextView salaireBrutMensuelTextView;
 	private TextView salaireNetMensuelTextView;
 	private Button monthlySalaryButton;
-	
+
+	private AdView adView;
+
 	private CalculateurSalaire calculateurSalaire;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.year_salary);
 
 		tjmInput = (EditText) findViewById(R.id.tjmInput);
 		salaireBrutAnnuelTextView = (TextView) findViewById(R.id.salaireBrutAnnuelTextView);
 		salaireBrutMensuelTextView = (TextView) findViewById(R.id.salaireBrutMensuelTextView);
 		salaireNetMensuelTextView = (TextView) findViewById(R.id.salaireNetMensuelTextView);
-		
-		monthlySalaryButton= (Button) findViewById(R.id.monthlySalaryButton);
+		adView = (AdView) findViewById(R.id.ad);
+
+		monthlySalaryButton = (Button) findViewById(R.id.monthlySalaryButton);
 
 		calculateurSalaire = buildCalculateurSalaire();
-		
+
+		adView.setAdListener(new SimpleAdListener() {
+			@Override
+			public void onFailedToReceiveAd(AdView arg0) {
+				Log.d("TEST", "onFailedToReceiveAd");
+			}
+
+			@Override
+			public void onReceiveAd(AdView arg0) {
+				Log.d("TEST", "onReceiveAd");
+			}
+
+			@Override
+			public void onReceiveRefreshedAd(AdView arg0) {
+				Log.d("TEST", "onReceiveRefreshedAd");
+			}
+			
+			@Override
+			public void onFailedToReceiveRefreshedAd(AdView arg0) {
+				Log.d("TEST", "onFailedToReceiveRefreshedAd");
+			}
+
+		});
+
 		tjmInput.addTextChangedListener(new AbstractTextWatcher() {
 			@Override
 			public void afterTextChanged(Editable s) {
 				onTjmChanged();
 			}
 		});
-		
+
 		monthlySalaryButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(TJMoid.this, MonthlySalaryActivity.class);
+				Intent intent = new Intent(YearSalaryActivity.this, MonthlySalaryActivity.class);
 				int defaultTjm = tjmFromInput();
 				intent.putExtra(MonthlySalaryActivity.DEFAULT_TJM_EXTRA, defaultTjm);
 				startActivity(intent);
 			}
 		});
-		
+
 	}
 
 	private void onTjmChanged() {
@@ -80,11 +109,11 @@ public class TJMoid extends TrackingActivity {
 
 		long salaireBrutAnnuel = calculateurSalaire.calculerSalaireBrut(tjm);
 		salaireBrutAnnuelTextView.setText(salaireBrutAnnuel + " euros");
-		
+
 		long salaireBrutMensuel = salaireBrutAnnuel / 12;
 		salaireBrutMensuelTextView.setText(salaireBrutMensuel + " euros");
-		
-		long salaireNetMensuel = (long) (((double)salaireBrutMensuel) * 0.77);
+
+		long salaireNetMensuel = (long) (((double) salaireBrutMensuel) * 0.77);
 		salaireNetMensuelTextView.setText(salaireNetMensuel + " euros");
 	}
 
@@ -143,7 +172,7 @@ public class TJMoid extends TrackingActivity {
 	}
 
 	private void startPreferencesActivity() {
-		Intent preferencesActivityIntent = new Intent(TJMoid.this, Preferences.class);
+		Intent preferencesActivityIntent = new Intent(YearSalaryActivity.this, Preferences.class);
 		startActivity(preferencesActivityIntent);
 	}
 
