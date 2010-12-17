@@ -24,13 +24,13 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 
 	protected int year;
 
-	protected int nbJoursOuvres;
+	protected double nbJoursOuvres;
 
-	protected int nbConges;
+	protected double nbConges;
 
-	protected int nbCongesSansSolde;
+	protected double nbCongesSansSolde;
 
-	protected int nbJoursCommunautaires;
+	protected double nbJoursCommunautaires;
 
 	/**
 	 * Attention : dans les calculs, le CA Manuel est aussi partagé entre la
@@ -168,7 +168,7 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 	}
 
 	private double calculerChiffreAffaireGénéré(double salaireBrutDuMois) {
-		int nbJoursFacturés = calculerNbJoursFacturés();
+		double nbJoursFacturés = calculerNbJoursFacturés();
 		double chiffreAffaireFacturation = (1 - tauxMargeCommerciale) * (tjm * nbJoursFacturés);
 
 		// TODO vérifier la formule de calcul des jours communautaires
@@ -179,7 +179,7 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 		return chiffreAffaireGenere;
 	}
 
-	private int calculerNbJoursFacturés() {
+	private double calculerNbJoursFacturés() {
 		return nbJoursOuvres - (nbConges + nbCongesSansSolde + nbJoursCommunautaires);
 	}
 
