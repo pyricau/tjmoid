@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="info.piwai.tjmoid"
+      android:versionCode="5"
+      android:versionName="1.4">
+
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />      
+      
+    <application
+    	android:icon="@drawable/icon"
+    	android:label="TJMoid"
+    	android:name=".TJMoidApplication"
+    	>
+        <activity
+        	android:name=".YearSalaryActivity"
+            android:label="TJMoid">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+        	android:name=".MonthlySalaryActivity"
+            android:label="Salaire exact" />
+
+	    <activity
+	    	android:name=".Preferences"
+	    	android:label="Paramètres de configuration"
+	    	/>
+	    	
+	    <activity
+	    	android:name=".CheckMaestroActivity"
+	    	android:label="Salaire dans Maestro"
+	    	android:theme="@android:style/Theme.NoTitleBar"
+	    	/>	    	
+	    	
+	    	
+    
+
+		<!-- The application's publisher ID assigned by AdMob -->
+		<meta-data android:value="a14d0b318923d37" android:name="ADMOB_PUBLISHER_ID" />
+		<meta-data android:value="a14d0b318923d37" android:name="ADMOB_INTERSTITIAL_PUBLISHER_ID" />
+		<!-- AdMobActivity definition -->
+		<activity
+			android:name="com.admob.android.ads.AdMobActivity"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+			android:configChanges="orientation|keyboard|keyboardHidden" />
+		<!-- Track Market installs -->
+		<receiver
+			android:name="com.admob.android.ads.analytics.InstallReceiver"
+			android:exported="true">
+			<intent-filter>
+				<action android:name="com.android.vending.INSTALL_REFERRER" />
+			</intent-filter>
+		</receiver>
+	</application>
+    
+    <uses-sdk android:minSdkVersion="7" />
+
+</manifest> 
