@@ -29,6 +29,14 @@
 	    	android:name=".Preferences"
 	    	android:label="Paramètres de configuration"
 	    	/>
+	    	
+	    <activity
+	    	android:name=".CheckMaestroActivity"
+	    	android:label="Salaire dans Maestro"
+	    	android:theme="@android:style/Theme.NoTitleBar"
+	    	/>	    	
+	    	
+	    	
     
 
 		<!-- The application's publisher ID assigned by AdMob -->
@@ -49,6 +57,6 @@
 		</receiver>
 	</application>
     
-    <uses-sdk android:minSdkVersion="3" />
+    <uses-sdk android:minSdkVersion="7" />
 
 </manifest> 

@@ -9,10 +9,14 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -60,13 +64,13 @@ public class MonthlySalaryActivity extends TrackingActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.monthly_salary);
 
 		defaultTjm = getIntent().getIntExtra(DEFAULT_TJM_EXTRA, 0);
 
 		salaireDao = new SalaireDao(this);
-		
+
 		findViews();
 
 		initSpinners();
@@ -74,11 +78,9 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		bindSpinners();
 
 		bindInputs();
-		
+
 		bindButtons();
 	}
-	
-
 
 	private void findViews() {
 		yearSelectSpinner = (Spinner) findViewById(R.id.yearSelectSpinner);
@@ -98,7 +100,7 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		previousMonthButton = (Button) findViewById(R.id.previousMonthButton);
 		nextMonthButton = (Button) findViewById(R.id.nextMonthButton);
 	}
-	
+
 	private void initSpinners() {
 		allowedYears = JoursOuvres.allowedValues();
 		ArrayAdapter<JoursOuvres> yearAdapter = new ArrayAdapter<JoursOuvres>(this, android.R.layout.simple_spinner_item, allowedYears);
@@ -109,7 +111,7 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		monthSelectSpinner.setAdapter(monthAdapter);
 	}
-	
+
 	private void bindSpinners() {
 		yearSelectSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
@@ -139,7 +141,7 @@ public class MonthlySalaryActivity extends TrackingActivity {
 			}
 		});
 	}
-	
+
 	private void updateSelectedMonth(int newSelectedMonth, JoursOuvres newSelectedYear) {
 		selectedMonth = newSelectedMonth;
 		selectedYear = newSelectedYear;
@@ -152,7 +154,7 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		int yearSelectionIndex = Arrays.binarySearch(allowedYears, selectedYear);
 		yearSelectSpinner.setSelection(yearSelectionIndex);
 	}
-	
+
 	private void updateViewsFromSelectedMonth() {
 		Log.d(TAG, "Reloading data and views");
 
@@ -226,7 +228,7 @@ public class MonthlySalaryActivity extends TrackingActivity {
 			}
 		});
 	}
-	
+
 	private void validateAndUpdate() {
 		List<String> validationErrors = new ArrayList<String>();
 		salaire.validate(validationErrors);
@@ -243,7 +245,7 @@ public class MonthlySalaryActivity extends TrackingActivity {
 			errors.setText(sb);
 		}
 	}
-	
+
 	private void bindButtons() {
 		previousMonthButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -300,7 +302,7 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		super.onResume();
 		loadSelectedMonth();
 	}
-	
+
 	private void loadSelectedMonth() {
 
 		Calendar calendar = Calendar.getInstance();
@@ -334,11 +336,25 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		super.onDestroy();
 		salaireDao.close();
 	}
-	
+
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		loadSelectedMonth();
 		super.onRestoreInstanceState(savedInstanceState);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		menu.add("Vérifier sur Maestro").setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				Intent intent = new Intent(MonthlySalaryActivity.this, CheckMaestroActivity.class);
+				startActivity(intent);
+				return true;
+			}
+		});
+		return true;
 	}
 
 }
