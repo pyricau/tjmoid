@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:myapp="http://schemas.android.com/apk/res/info.piwai.tjmoid"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+	>
+	
+	<com.admob.android.ads.AdView
+		android:id="@+id/ad"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		myapp:backgroundColor="#FFFFFF"
+		myapp:primaryTextColor="#000000"
+		myapp:secondaryTextColor="#CCCCCC"
+		myapp:keywords="finance facturation euros"
+	/>   	
+
+	<ScrollView
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	       	android:background="@drawable/frame_background"
+	       	>
+		<RelativeLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		>
+			
+			<Button
+				android:id="@+id/nextMonthButton"
+				android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content"
+			    android:text=" &gt; "
+			    android:layout_margin="5dip"
+			    
+			    android:layout_alignParentTop="true"
+			    android:layout_alignParentRight="true"
+			/>			
+		
+			<Button
+				android:id="@+id/previousMonthButton"
+				android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content"
+			    android:text=" &lt; "
+			    android:layout_marginLeft="5dip"
+			    
+			    android:layout_toLeftOf="@id/nextMonthButton"
+			    android:layout_alignTop="@id/nextMonthButton"
+			/>
+	
+		    <Spinner  
+				android:id="@+id/yearSelectSpinner"
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content"
+			    
+			    android:layout_marginLeft="5dip"
+			    android:layout_toLeftOf="@id/previousMonthButton"
+			    android:layout_alignTop="@id/previousMonthButton"
+			    />
+		    
+		    <Spinner  
+				android:id="@+id/monthSelectSpinner"
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			   	android:layout_marginLeft="5dip"
+			    
+			   	android:layout_toLeftOf="@id/yearSelectSpinner"
+			    android:layout_alignTop="@id/yearSelectSpinner"
+			    />
+			    
+			<TextView 
+				android:id="@+id/errors"
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content"
+			    android:textSize="10sp"
+			    android:textColor="#f00"
+			    android:layout_marginRight="5dip"
+			    
+				android:layout_below="@id/yearSelectSpinner"
+			    />
+		
+			<View
+				android:id="@+id/helper" 
+				android:layout_width="0dp"
+				android:layout_height="0dp" 
+				android:layout_below="@id/errors"
+				android:layout_centerHorizontal="true" />
+			    
+		    
+			<TextView 
+				android:id="@+id/labelTjm"
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content"
+			    android:textSize="14sp"
+			    android:layout_marginLeft="5dip"
+			    android:textColor="#000"
+			    
+			    android:text="Tjm"
+			    
+			    android:layout_toLeftOf="@id/helper"
+			    android:layout_alignTop="@id/helper"
+			    android:layout_alignParentLeft="true"
+			    />
+			<EditText  
+				android:id="@+id/tjmInput"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content" 
+			    android:hint="TJM"
+			    android:inputType="numberSigned"
+			   	android:textSize="18sp"
+			    
+			    android:text="600"
+			    android:layout_below="@id/labelTjm"
+			    android:layout_toLeftOf="@id/helper"
+			    android:layout_alignLeft="@id/labelTjm"
+			    />
+		
+			<TextView 
+				android:id="@+id/labelConges"
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content"
+			    android:textSize="14sp"
+			    android:layout_marginRight="5dip"
+			    android:textColor="#000"
+			    
+			    android:text="Congés, intercontrats"
+			    
+			    android:layout_toRightOf="@id/helper"
+			    android:layout_alignTop="@id/helper"
+			    android:layout_alignParentRight="true"
+			    />
+			<EditText  
+				android:id="@+id/congesInput"
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content" 
+			    android:hint="Congés"
+			    android:inputType="numberDecimal"
+			    android:textSize="18sp"
+			  	
+			    android:text="2"
+			    android:layout_below="@id/labelConges"
+			    android:layout_toRightOf="@id/helper"
+			    android:layout_alignRight="@id/labelConges"
+			    />
+			    
+			<View
+				android:id="@+id/helper2" 
+				android:layout_width="0dp"
+				android:layout_height="0dp" 
+				android:layout_below="@id/tjmInput"
+				android:layout_centerHorizontal="true" />
+			    
+		    
+			<TextView 
+				android:id="@+id/labelCaManuel"
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content"
+			    android:textSize="14sp"
+			    android:layout_marginLeft="5dip"
+			    android:textColor="#000"
+			    
+			    android:text="CA Manuel"
+			    
+			    android:layout_toLeftOf="@id/helper2"
+			    android:layout_alignTop="@id/helper2"
+			    android:layout_alignParentLeft="true"
+			    />
+			<EditText  
+				android:id="@+id/caManuelInput"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content" 
+			    android:hint="CA Manuel"
+			    android:inputType="numberDecimal"
+			   	android:textSize="18sp"
+			    
+			    android:text="300"
+			    android:layout_below="@id/labelCaManuel"
+			    android:layout_toLeftOf="@id/helper2"
+			    android:layout_alignLeft="@id/labelCaManuel"
+			    />
+		
+			<TextView 
+				android:id="@+id/labelCss"
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content"
+			    android:textSize="14sp"
+			    android:layout_marginRight="5dip"
+			    android:textColor="#000"
+			    
+			    android:text="Congés sans solde"
+			    
+			    android:layout_toRightOf="@id/helper2"
+			    android:layout_alignTop="@id/helper2"
+			    android:layout_alignParentRight="true"
+			    />
+			<EditText  
+				android:id="@+id/cssInput"
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content" 
+			    android:hint="CSS"
+			    android:inputType="numberDecimal"
+			    android:textSize="18sp"
+			  	
+			    android:text="1"
+			    android:layout_below="@id/labelCss"
+			    android:layout_toRightOf="@id/helper2"
+			    android:layout_alignRight="@id/labelCss"
+			    />	    
+			    
+			    
+		    <ImageView
+		    	android:id="@+id/div1"
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:src="@drawable/divider"
+		    	android:layout_margin="5dip"
+		    	
+		    	android:layout_below="@id/caManuelInput"
+		    	/>
+		    	
+			<TextView 
+				android:id="@+id/label1"
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content" 
+			    android:text="Fixe brut mensuel :"
+			    android:textColor="@color/label"
+			    
+			    android:layout_below="@id/div1"
+			    />
+			<TextView 
+				android:id="@+id/fixeBrutMensuelTextView"
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content"
+			    android:textColor="@color/value"
+			    android:gravity="right"
+			    android:textSize="16dip"
+			    
+			    android:text="30203€"
+			    android:layout_toRightOf="@id/label1"
+			    android:layout_alignTop="@id/label1"
+			    />
+		    
+		    <ImageView
+		        android:id="@+id/div2"
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:src="@drawable/divider"
+		    	android:layout_margin="5dip"
+		    	
+		    	android:layout_below="@id/label1"
+		    	/>
+		    
+		    <TextView
+		    	android:id="@+id/label2"
+		    	android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		    	android:text="Primes brut mensuelles :"
+		    	android:textColor="@color/label"
+			    
+			    android:layout_below="@id/div2"
+		    	/>	
+		    <TextView
+		    	android:id="@+id/primesBrutMensuellesTextView"
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:textColor="@color/value"
+		    	android:gravity="right"
+		    	android:textSize="16dip"
+			    
+			    android:text="30203€"
+			    android:layout_toRightOf="@id/label2"
+			    android:layout_alignTop="@id/label2"
+			    />
+		    	
+		    <ImageView
+		        android:id="@+id/div3"    
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:src="@drawable/divider"
+		    	android:layout_margin="5dip"
+		    	
+		    	android:layout_below="@id/label2"
+		    	/>
+		
+			<TextView
+		    	android:id="@+id/label3"	
+		    	android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		    	android:text="Total brut mensuel :"
+		    	android:textColor="@color/label"
+			    
+			    android:layout_below="@id/div3"
+			    />	
+		    <TextView
+		    	android:id="@+id/totalBrutMensuelTextView"
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:textColor="@color/value"
+		    	android:gravity="right"
+		    	android:textSize="16dip"
+			    
+			    android:text="30203€"
+			    android:layout_toRightOf="@id/label3"
+			    android:layout_alignTop="@id/label3"
+			    />
+		    
+		    <ImageView
+		        android:id="@+id/div4"    
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:src="@drawable/divider"
+		    	android:layout_margin="5dip"
+		    	
+		    	android:layout_below="@id/label3"
+		    	/>
+		
+			<TextView
+		    	android:id="@+id/label4"	
+		    	android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		    	android:text="Total net mensuel :"
+		    	android:textColor="@color/label"
+			    
+			    android:layout_below="@id/div4"
+			    />	
+		    <TextView
+		    	android:id="@+id/totalNetMensuelTextView"
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:textColor="@color/value"
+		    	android:gravity="right"
+		    	android:textSize="16dip"
+			    
+			    android:text="30203€"
+			    android:layout_toRightOf="@id/label4"
+			    android:layout_alignTop="@id/label4"
+			    />
+		    
+		    <ImageView
+		        android:id="@+id/div6"    
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:src="@drawable/divider"
+		    	android:layout_margin="5dip"
+		    	
+		    	android:layout_below="@id/label4"
+		    	/>
+			<TextView
+		    	android:id="@+id/label5"	
+		    	android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		    	android:text="Chiffre d'affaire Maestro"
+		    	android:textColor="@color/label"
+			    
+			    android:layout_below="@id/div6"
+			    />	
+		    <TextView
+		    	android:id="@+id/caGenereTextView"
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:textColor="@color/value"
+		    	android:gravity="right"
+		    	android:textSize="16dip"
+			    
+			    android:text="30203€"
+			    android:layout_toRightOf="@id/label5"
+			    android:layout_alignTop="@id/label5"
+			    />
+		    
+		    <ImageView
+		        android:id="@+id/div7"    
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:src="@drawable/divider"
+		    	android:layout_margin="5dip"
+		    	
+		    	android:layout_below="@id/label5"
+		    	/>    	
+			<TextView
+		    	android:id="@+id/label6"	
+		    	android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		    	android:text="Primes brut non lissées"
+		    	android:textColor="@color/label"
+			    
+			    android:layout_below="@id/div7"
+			    />	
+		    <TextView
+		    	android:id="@+id/primesNonLisseesTextView"
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:textColor="@color/value"
+		    	android:gravity="right"
+		    	android:textSize="16dip"
+			    
+			    android:text="200€"
+			    android:layout_toRightOf="@id/label6"
+			    android:layout_alignTop="@id/label6"
+			    />
+		    
+		    <ImageView
+		        android:id="@+id/div8"    
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:src="@drawable/divider"
+		    	android:layout_margin="5dip"
+		    	
+		    	android:layout_below="@id/label6"
+		    	/>    		    	
+		    	
+		</RelativeLayout>
+	</ScrollView>
+</LinearLayout>
