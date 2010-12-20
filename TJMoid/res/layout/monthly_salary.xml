@@ -9,15 +9,37 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
 	>
-	
-	    <Spinner  
-			android:id="@+id/yearSelectSpinner"
-		    android:layout_width="wrap_content" 
+		
+		<Button
+			android:id="@+id/nextMonthButton"
+			android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content"
+		    android:text=" &gt; "
 		    android:layout_margin="5dip"
 		    
 		    android:layout_alignParentTop="true"
 		    android:layout_alignParentRight="true"
+		/>			
+	
+		<Button
+			android:id="@+id/previousMonthButton"
+			android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content"
+		    android:text=" &lt; "
+		    android:layout_marginLeft="5dip"
+		    
+		    android:layout_toLeftOf="@id/nextMonthButton"
+		    android:layout_alignTop="@id/nextMonthButton"
+		/>
+
+	    <Spinner  
+			android:id="@+id/yearSelectSpinner"
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content"
+		    
+		    android:layout_marginLeft="5dip"
+		    android:layout_toLeftOf="@id/previousMonthButton"
+		    android:layout_alignTop="@id/previousMonthButton"
 		    />
 	    
 	    <Spinner  
