@@ -77,6 +77,110 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		
 		bindButtons();
 	}
+	
+
+
+	private void findViews() {
+		yearSelectSpinner = (Spinner) findViewById(R.id.yearSelectSpinner);
+		monthSelectSpinner = (Spinner) findViewById(R.id.monthSelectSpinner);
+		tjmInput = (EditText) findViewById(R.id.tjmInput);
+		congesInput = (EditText) findViewById(R.id.congesInput);
+		cssInput = (EditText) findViewById(R.id.cssInput);
+		caManuelInput = (EditText) findViewById(R.id.caManuelInput);
+
+		totalBrutMensuelTextView = (TextView) findViewById(R.id.totalBrutMensuelTextView);
+		totalNetMensuelTextView = (TextView) findViewById(R.id.totalNetMensuelTextView);
+		fixeBrutMensuelTextView = (TextView) findViewById(R.id.fixeBrutMensuelTextView);
+		primesBrutMensuellesTextView = (TextView) findViewById(R.id.primesBrutMensuellesTextView);
+		primesNonLisseesTextView = (TextView) findViewById(R.id.primesNonLisseesTextView);
+		caGenereTextView = (TextView) findViewById(R.id.caGenereTextView);
+		errors = (TextView) findViewById(R.id.errors);
+		previousMonthButton = (Button) findViewById(R.id.previousMonthButton);
+		nextMonthButton = (Button) findViewById(R.id.nextMonthButton);
+	}
+	
+	private void initSpinners() {
+		allowedYears = JoursOuvres.allowedValues();
+		ArrayAdapter<JoursOuvres> yearAdapter = new ArrayAdapter<JoursOuvres>(this, android.R.layout.simple_spinner_item, allowedYears);
+		yearSelectSpinner.setAdapter(yearAdapter);
+		yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		ArrayAdapter<CharSequence> monthAdapter = ArrayAdapter.createFromResource(this, R.array.months, android.R.layout.simple_spinner_item);
+		monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		monthSelectSpinner.setAdapter(monthAdapter);
+	}
+	
+	private void bindSpinners() {
+		yearSelectSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
+				if (selectedYear != allowedYears[position]) {
+					updateSelectedMonth(selectedMonth, allowedYears[position]);
+					getTracker().trackEvent("Spinner", "Change", "Year", selectedYear.getAnnee());
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+
+		monthSelectSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
+				if (selectedMonth != position) {
+					updateSelectedMonth(position, selectedYear);
+					getTracker().trackEvent("Spinner", "Change", "Month", selectedMonth);
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+	}
+	
+	private void updateSelectedMonth(int newSelectedMonth, JoursOuvres newSelectedYear) {
+		selectedMonth = newSelectedMonth;
+		selectedYear = newSelectedYear;
+		updateSpinnersFromSelectedMonth();
+		updateViewsFromSelectedMonth();
+	}
+
+	private void updateSpinnersFromSelectedMonth() {
+		monthSelectSpinner.setSelection(selectedMonth);
+		int yearSelectionIndex = Arrays.binarySearch(allowedYears, selectedYear);
+		yearSelectSpinner.setSelection(yearSelectionIndex);
+	}
+	
+	private void updateViewsFromSelectedMonth() {
+		Log.d(TAG, "Reloading data and views");
+
+		salaire = salaireDao.find(selectedYear.getAnnee(), selectedMonth, defaultTjm);
+
+		totalBrutMensuelTextView.setText(salaire.getTotalBrutMensuel());
+		totalNetMensuelTextView.setText(salaire.getTotalNetMensuel());
+		fixeBrutMensuelTextView.setText(salaire.getFixeBrutMensuel());
+		primesBrutMensuellesTextView.setText(salaire.getPrimesBrutMensuelles());
+		primesNonLisseesTextView.setText(salaire.getPrimesNonLissées());
+		caGenereTextView.setText(salaire.getChiffreAffaireGenere());
+
+		if (salaire.tjmChanged(tjmInput.getText().toString())) {
+			tjmInput.setText(salaire.getTjmAsString());
+		}
+
+		if (salaire.congesChanged(congesInput.getText().toString())) {
+			congesInput.setText(salaire.getCongesAsString());
+		}
+
+		if (salaire.cssChanged(cssInput.getText().toString())) {
+			cssInput.setText(salaire.getCssAsString());
+		}
+
+		if (salaire.caManuelChanged(caManuelInput.getText().toString())) {
+			caManuelInput.setText(salaire.getCaManuelAsString());
+		}
+	}
 
 	private void bindInputs() {
 		tjmInput.addTextChangedListener(new AbstractTextWatcher() {
@@ -122,126 +226,7 @@ public class MonthlySalaryActivity extends TrackingActivity {
 			}
 		});
 	}
-
-	private void initSpinners() {
-		allowedYears = JoursOuvres.allowedValues();
-		ArrayAdapter<JoursOuvres> yearAdapter = new ArrayAdapter<JoursOuvres>(this, android.R.layout.simple_spinner_item, allowedYears);
-		yearSelectSpinner.setAdapter(yearAdapter);
-		yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		ArrayAdapter<CharSequence> monthAdapter = ArrayAdapter.createFromResource(this, R.array.months, android.R.layout.simple_spinner_item);
-		monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		monthSelectSpinner.setAdapter(monthAdapter);
-	}
-
-	private void bindSpinners() {
-		yearSelectSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
-				if (selectedYear != allowedYears[position]) {
-					updateSelectedMonth(selectedMonth, allowedYears[position]);
-					getTracker().trackEvent("Spinner", "Change", "Year", selectedYear.getAnnee());
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-			}
-		});
-
-		monthSelectSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
-				if (selectedMonth != position) {
-					updateSelectedMonth(position, selectedYear);
-					getTracker().trackEvent("Spinner", "Change", "Month", selectedMonth);
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-			}
-		});
-	}
 	
-
-	private void bindButtons() {
-		previousMonthButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				selectPreviousMonth();
-			}
-		});
-		nextMonthButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				selectNextMonth();
-			}
-		});
-	}
-
-
-	private void findViews() {
-		yearSelectSpinner = (Spinner) findViewById(R.id.yearSelectSpinner);
-		monthSelectSpinner = (Spinner) findViewById(R.id.monthSelectSpinner);
-		tjmInput = (EditText) findViewById(R.id.tjmInput);
-		congesInput = (EditText) findViewById(R.id.congesInput);
-		cssInput = (EditText) findViewById(R.id.cssInput);
-		caManuelInput = (EditText) findViewById(R.id.caManuelInput);
-
-		totalBrutMensuelTextView = (TextView) findViewById(R.id.totalBrutMensuelTextView);
-		totalNetMensuelTextView = (TextView) findViewById(R.id.totalNetMensuelTextView);
-		fixeBrutMensuelTextView = (TextView) findViewById(R.id.fixeBrutMensuelTextView);
-		primesBrutMensuellesTextView = (TextView) findViewById(R.id.primesBrutMensuellesTextView);
-		primesNonLisseesTextView = (TextView) findViewById(R.id.primesNonLisseesTextView);
-		caGenereTextView = (TextView) findViewById(R.id.caGenereTextView);
-		errors = (TextView) findViewById(R.id.errors);
-		previousMonthButton = (Button) findViewById(R.id.previousMonthButton);
-		nextMonthButton = (Button) findViewById(R.id.nextMonthButton);
-	}
-
-	private void updateSelectedMonth(int newSelectedMonth, JoursOuvres newSelectedYear) {
-		selectedMonth = newSelectedMonth;
-		selectedYear = newSelectedYear;
-		updateSpinnersFromSelectedMonth();
-		updateViewsFromSelectedMonth();
-	}
-
-	private void updateSpinnersFromSelectedMonth() {
-		monthSelectSpinner.setSelection(selectedMonth);
-		int yearSelectionIndex = Arrays.binarySearch(allowedYears, selectedYear);
-		yearSelectSpinner.setSelection(yearSelectionIndex);
-	}
-
-	private void updateViewsFromSelectedMonth() {
-		Log.d(TAG, "Reloading data and views");
-
-		salaire = salaireDao.find(selectedYear.getAnnee(), selectedMonth, defaultTjm);
-
-		totalBrutMensuelTextView.setText(salaire.getTotalBrutMensuel());
-		totalNetMensuelTextView.setText(salaire.getTotalNetMensuel());
-		fixeBrutMensuelTextView.setText(salaire.getFixeBrutMensuel());
-		primesBrutMensuellesTextView.setText(salaire.getPrimesBrutMensuelles());
-		primesNonLisseesTextView.setText(salaire.getPrimesNonLissées());
-		caGenereTextView.setText(salaire.getChiffreAffaireGenere());
-
-		if (salaire.tjmChanged(tjmInput.getText().toString())) {
-			tjmInput.setText(salaire.getTjmAsString());
-		}
-
-		if (salaire.congesChanged(congesInput.getText().toString())) {
-			congesInput.setText(salaire.getCongesAsString());
-		}
-
-		if (salaire.cssChanged(cssInput.getText().toString())) {
-			cssInput.setText(salaire.getCssAsString());
-		}
-
-		if (salaire.caManuelChanged(caManuelInput.getText().toString())) {
-			caManuelInput.setText(salaire.getCaManuelAsString());
-		}
-	}
-
 	private void validateAndUpdate() {
 		List<String> validationErrors = new ArrayList<String>();
 		salaire.validate(validationErrors);
@@ -258,46 +243,20 @@ public class MonthlySalaryActivity extends TrackingActivity {
 			errors.setText(sb);
 		}
 	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		loadSelectedMonth();
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-
-		saveSelectedMonth();
-	}
-
-	private void saveSelectedMonth() {
-		getPreferences(MODE_PRIVATE) //
-				.edit() //
-				.putInt(SELECTED_YEAR_PREF, selectedYear.getAnnee()) //
-				.putInt(SELECTED_MONTH_PREF, selectedMonth) //
-				.commit();
-	}
-
-	private void loadSelectedMonth() {
-
-		Calendar calendar = Calendar.getInstance();
-
-		int defaultSelectedYear = calendar.get(Calendar.YEAR);
-		int defaultSelectedMonth = calendar.get(Calendar.MONTH);
-
-		SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-		JoursOuvres newSelectedYear = JoursOuvres.fromYear(preferences.getInt(SELECTED_YEAR_PREF, defaultSelectedYear));
-		int newSelectedMonth = preferences.getInt(SELECTED_MONTH_PREF, defaultSelectedMonth);
-
-		updateSelectedMonth(newSelectedMonth, newSelectedYear);
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		salaireDao.close();
+	
+	private void bindButtons() {
+		previousMonthButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				selectPreviousMonth();
+			}
+		});
+		nextMonthButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				selectNextMonth();
+			}
+		});
 	}
 
 	private void selectNextMonth() {
@@ -334,6 +293,46 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		} else {
 			updateSelectedMonth(newSelectedMonth, selectedYear);
 		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		loadSelectedMonth();
+	}
+	
+	private void loadSelectedMonth() {
+
+		Calendar calendar = Calendar.getInstance();
+
+		int defaultSelectedYear = calendar.get(Calendar.YEAR);
+		int defaultSelectedMonth = calendar.get(Calendar.MONTH);
+
+		SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+		JoursOuvres newSelectedYear = JoursOuvres.fromYear(preferences.getInt(SELECTED_YEAR_PREF, defaultSelectedYear));
+		int newSelectedMonth = preferences.getInt(SELECTED_MONTH_PREF, defaultSelectedMonth);
+
+		updateSelectedMonth(newSelectedMonth, newSelectedYear);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		saveSelectedMonth();
+	}
+
+	private void saveSelectedMonth() {
+		getPreferences(MODE_PRIVATE) //
+				.edit() //
+				.putInt(SELECTED_YEAR_PREF, selectedYear.getAnnee()) //
+				.putInt(SELECTED_MONTH_PREF, selectedMonth) //
+				.commit();
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		salaireDao.close();
 	}
 
 }
