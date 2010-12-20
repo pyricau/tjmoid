@@ -5,10 +5,14 @@ import info.piwai.tjmoid.domain.SalaireDao;
 import info.piwai.tjmoid.domain.SalaireMensuel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -18,8 +22,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class MonthlySalaryActivity extends TrackingActivity {
+	private static final String TAG = MonthlySalaryActivity.class.getSimpleName();
 
 	public static final String DEFAULT_TJM_EXTRA = "default_tjm_extra";
+	private static final String SELECTED_YEAR_PREF = "selectedYear";
+	private static final String SELECTED_MONTH_PREF = "selectedMonth";
+
 	private int defaultTjm;
 
 	private SalaireDao salaireDao;
@@ -61,8 +69,6 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		bindSpinners();
 
 		bindInputs();
-
-		updateViewsFromSelectedMonth();
 	}
 
 	private void bindInputs() {
@@ -128,9 +134,11 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		yearSelectSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
-				selectedYear = allowedYears[position];
-				updateViewsFromSelectedMonth();
-				getTracker().trackEvent("Spinner", "Change", "Year", selectedYear.getAnnee());
+				if (selectedYear != allowedYears[position]) {
+					selectedYear = allowedYears[position];
+					updateViewsFromSelectedMonth();
+					getTracker().trackEvent("Spinner", "Change", "Year", selectedYear.getAnnee());
+				}
 			}
 
 			@Override
@@ -141,15 +149,24 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		monthSelectSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
-				selectedMonth = position;
-				updateViewsFromSelectedMonth();
-				getTracker().trackEvent("Spinner", "Change", "Month", selectedMonth);
+				if (selectedMonth != position) {
+					selectedMonth = position;
+					updateViewsFromSelectedMonth();
+					getTracker().trackEvent("Spinner", "Change", "Month", selectedMonth);
+				}
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 		});
+	}
+	
+	
+	private void updateSpinnersFromSelectedMonth() {
+		monthSelectSpinner.setSelection(selectedMonth);
+		int yearSelectionIndex = Arrays.binarySearch(allowedYears, selectedYear);
+		yearSelectSpinner.setSelection(yearSelectionIndex);
 	}
 
 	private void findViews() {
@@ -170,6 +187,8 @@ public class MonthlySalaryActivity extends TrackingActivity {
 	}
 
 	private void updateViewsFromSelectedMonth() {
+		Log.d(TAG, "Reloading data and views");
+		
 		salaire = salaireDao.find(selectedYear.getAnnee(), selectedMonth, defaultTjm);
 
 		totalBrutMensuelTextView.setText(salaire.getTotalBrutMensuel());
@@ -211,6 +230,41 @@ public class MonthlySalaryActivity extends TrackingActivity {
 			}
 			errors.setText(sb);
 		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		loadSelectedMonth();
+		updateSpinnersFromSelectedMonth();
+		updateViewsFromSelectedMonth();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+		saveSelectedMonth();
+	}
+
+	private void saveSelectedMonth() {
+		getPreferences(MODE_PRIVATE) //
+				.edit() //
+				.putInt(SELECTED_YEAR_PREF, selectedYear.getAnnee()) //
+				.putInt(SELECTED_MONTH_PREF, selectedMonth) //
+				.commit();
+	}
+
+	private void loadSelectedMonth() {
+
+		Calendar calendar = Calendar.getInstance();
+
+		int defaultSelectedYear = calendar.get(Calendar.YEAR);
+		int defaultSelectedMonth = calendar.get(Calendar.MONTH);
+
+		SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+		selectedYear = JoursOuvres.fromYear(preferences.getInt(SELECTED_YEAR_PREF, defaultSelectedYear));
+		selectedMonth = preferences.getInt(SELECTED_MONTH_PREF, defaultSelectedMonth);
 	}
 
 }
