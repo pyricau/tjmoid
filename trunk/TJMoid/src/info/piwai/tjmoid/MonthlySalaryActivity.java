@@ -125,9 +125,6 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		ArrayAdapter<CharSequence> monthAdapter = ArrayAdapter.createFromResource(this, R.array.months, android.R.layout.simple_spinner_item);
 		monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		monthSelectSpinner.setAdapter(monthAdapter);
-
-		selectedYear = allowedYears[0];
-		selectedMonth = 0;
 	}
 
 	private void bindSpinners() {
@@ -135,8 +132,7 @@ public class MonthlySalaryActivity extends TrackingActivity {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
 				if (selectedYear != allowedYears[position]) {
-					selectedYear = allowedYears[position];
-					updateViewsFromSelectedMonth();
+					updateSelectedMonth(selectedMonth, allowedYears[position]);
 					getTracker().trackEvent("Spinner", "Change", "Year", selectedYear.getAnnee());
 				}
 			}
@@ -150,8 +146,7 @@ public class MonthlySalaryActivity extends TrackingActivity {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
 				if (selectedMonth != position) {
-					selectedMonth = position;
-					updateViewsFromSelectedMonth();
+					updateSelectedMonth(position, selectedYear);
 					getTracker().trackEvent("Spinner", "Change", "Month", selectedMonth);
 				}
 			}
@@ -162,13 +157,6 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		});
 	}
 	
-	
-	private void updateSpinnersFromSelectedMonth() {
-		monthSelectSpinner.setSelection(selectedMonth);
-		int yearSelectionIndex = Arrays.binarySearch(allowedYears, selectedYear);
-		yearSelectSpinner.setSelection(yearSelectionIndex);
-	}
-
 	private void findViews() {
 		yearSelectSpinner = (Spinner) findViewById(R.id.yearSelectSpinner);
 		monthSelectSpinner = (Spinner) findViewById(R.id.monthSelectSpinner);
@@ -184,6 +172,20 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		primesNonLisseesTextView = (TextView) findViewById(R.id.primesNonLisseesTextView);
 		caGenereTextView = (TextView) findViewById(R.id.caGenereTextView);
 		errors = (TextView) findViewById(R.id.errors);
+	}
+	
+	private void updateSelectedMonth(int newSelectedMonth, JoursOuvres newSelectedYear) {
+		selectedMonth = newSelectedMonth;
+		selectedYear = newSelectedYear;
+		updateSpinnersFromSelectedMonth();
+		updateViewsFromSelectedMonth();
+	}
+	
+	
+	private void updateSpinnersFromSelectedMonth() {
+		monthSelectSpinner.setSelection(selectedMonth);
+		int yearSelectionIndex = Arrays.binarySearch(allowedYears, selectedYear);
+		yearSelectSpinner.setSelection(yearSelectionIndex);
 	}
 
 	private void updateViewsFromSelectedMonth() {
@@ -236,8 +238,6 @@ public class MonthlySalaryActivity extends TrackingActivity {
 	protected void onResume() {
 		super.onResume();
 		loadSelectedMonth();
-		updateSpinnersFromSelectedMonth();
-		updateViewsFromSelectedMonth();
 	}
 
 	@Override
@@ -263,8 +263,10 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		int defaultSelectedMonth = calendar.get(Calendar.MONTH);
 
 		SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-		selectedYear = JoursOuvres.fromYear(preferences.getInt(SELECTED_YEAR_PREF, defaultSelectedYear));
-		selectedMonth = preferences.getInt(SELECTED_MONTH_PREF, defaultSelectedMonth);
+		JoursOuvres newSelectedYear = JoursOuvres.fromYear(preferences.getInt(SELECTED_YEAR_PREF, defaultSelectedYear));
+		int newSelectedMonth = preferences.getInt(SELECTED_MONTH_PREF, defaultSelectedMonth);
+		
+		updateSelectedMonth(newSelectedMonth, newSelectedYear);
 	}
 
 }
