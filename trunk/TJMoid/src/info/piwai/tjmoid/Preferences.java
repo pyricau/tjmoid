@@ -19,18 +19,42 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceManager;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 
-public class Preferences extends PreferenceActivity {
+public class Preferences extends TrackingPreferenceActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
+		
+		
+		OnPreferenceChangeListener listener = new OnPreferenceChangeListener() {
+			@Override
+			public boolean onPreferenceChange(Preference preference, Object newValue) {
+				
+				int intValue;
+				try {
+					intValue = Integer.parseInt(newValue.toString());
+				} catch (NumberFormatException e) {
+					intValue = 0;
+				}
+				
+				getTracker().trackEvent("Preference", "Change", preference.getKey(), intValue);
+				return true;
+			}
+		};
+		
+		PreferenceScreen preferenceScreen = getPreferenceScreen();
+		
+		for (int i = 0; i<preferenceScreen.getPreferenceCount(); i++) {
+			preferenceScreen.getPreference(i).setOnPreferenceChangeListener(listener);
+		}
 
-		Preference resetPreference = getPreferenceScreen().findPreference("reset");
+		Preference resetPreference = preferenceScreen.findPreference("reset");
 
 		resetPreference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			public boolean onPreferenceClick(Preference preference) {

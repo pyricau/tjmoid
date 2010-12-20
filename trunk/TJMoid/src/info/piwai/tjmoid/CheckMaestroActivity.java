@@ -19,7 +19,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
 
-public class CheckMaestroActivity extends Activity {
+public class CheckMaestroActivity extends TrackingActivity {
 	
 	private static final String SALAIRE_URL = "https://ecoles.excilys.com/maestro-ref/personne/salairePersonne.htm?action=Valider&idPersonne=";
 	private static final String TAG = CheckMaestroWebViewClient.class.getSimpleName();
