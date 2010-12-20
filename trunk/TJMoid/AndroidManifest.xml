@@ -14,7 +14,7 @@
     	>
         <activity
         	android:name=".YearSalaryActivity"
-            android:label="Salaire annuel">
+            android:label="TJMoid">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
