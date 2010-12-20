@@ -192,6 +192,7 @@ public class SalaireDao {
 			db.insert(SALAIRE_TABLE, NULL_COLUMN_HACK, values);
 		}
 		cursor.close();
+		
 		return salaire;
 	}
 	
@@ -204,6 +205,13 @@ public class SalaireDao {
 		
 		ContentValues values = salaireToContentValues(salaire);
 		db.update(SALAIRE_TABLE, values, SELECT_ONE, arguments);
+	}
+	
+	/**
+	 * Should be called when your activity does not need database access anymore, for example in its onDestroy method.
+	 */
+	public void close() {
+		helper.close();
 	}
 	
 
