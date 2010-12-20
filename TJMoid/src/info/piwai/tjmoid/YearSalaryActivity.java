@@ -62,29 +62,6 @@ public class YearSalaryActivity extends TrackingActivity {
 
 		calculateurSalaire = buildCalculateurSalaire();
 
-		adView.setAdListener(new SimpleAdListener() {
-			@Override
-			public void onFailedToReceiveAd(AdView arg0) {
-				Log.d("TEST", "onFailedToReceiveAd");
-			}
-
-			@Override
-			public void onReceiveAd(AdView arg0) {
-				Log.d("TEST", "onReceiveAd");
-			}
-
-			@Override
-			public void onReceiveRefreshedAd(AdView arg0) {
-				Log.d("TEST", "onReceiveRefreshedAd");
-			}
-			
-			@Override
-			public void onFailedToReceiveRefreshedAd(AdView arg0) {
-				Log.d("TEST", "onFailedToReceiveRefreshedAd");
-			}
-
-		});
-
 		tjmInput.addTextChangedListener(new AbstractTextWatcher() {
 			@Override
 			public void afterTextChanged(Editable s) {

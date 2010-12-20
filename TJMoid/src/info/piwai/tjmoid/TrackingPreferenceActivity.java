@@ -1,11 +1,11 @@
 package info.piwai.tjmoid;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 
-public abstract class TrackingActivity extends Activity {
+public abstract class TrackingPreferenceActivity extends PreferenceActivity {
 
 	private GoogleAnalyticsTracker tracker;
 
