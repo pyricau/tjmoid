@@ -268,5 +268,11 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		
 		updateSelectedMonth(newSelectedMonth, newSelectedYear);
 	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		salaireDao.close();
+	}
 
 }
