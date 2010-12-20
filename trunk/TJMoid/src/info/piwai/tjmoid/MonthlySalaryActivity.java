@@ -14,12 +14,15 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MonthlySalaryActivity extends TrackingActivity {
 	private static final String TAG = MonthlySalaryActivity.class.getSimpleName();
@@ -51,6 +54,8 @@ public class MonthlySalaryActivity extends TrackingActivity {
 	private TextView caGenereTextView;
 	private EditText cssInput;
 	private EditText caManuelInput;
+	private Button nextMonthButton;
+	private Button previousMonthButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +74,8 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		bindSpinners();
 
 		bindInputs();
+		
+		bindButtons();
 	}
 
 	private void bindInputs() {
@@ -157,6 +164,23 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		});
 	}
 	
+
+	private void bindButtons() {
+		previousMonthButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				selectPreviousMonth();
+			}
+		});
+		nextMonthButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				selectNextMonth();
+			}
+		});
+	}
+
+
 	private void findViews() {
 		yearSelectSpinner = (Spinner) findViewById(R.id.yearSelectSpinner);
 		monthSelectSpinner = (Spinner) findViewById(R.id.monthSelectSpinner);
@@ -172,16 +196,17 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		primesNonLisseesTextView = (TextView) findViewById(R.id.primesNonLisseesTextView);
 		caGenereTextView = (TextView) findViewById(R.id.caGenereTextView);
 		errors = (TextView) findViewById(R.id.errors);
+		previousMonthButton = (Button) findViewById(R.id.previousMonthButton);
+		nextMonthButton = (Button) findViewById(R.id.nextMonthButton);
 	}
-	
+
 	private void updateSelectedMonth(int newSelectedMonth, JoursOuvres newSelectedYear) {
 		selectedMonth = newSelectedMonth;
 		selectedYear = newSelectedYear;
 		updateSpinnersFromSelectedMonth();
 		updateViewsFromSelectedMonth();
 	}
-	
-	
+
 	private void updateSpinnersFromSelectedMonth() {
 		monthSelectSpinner.setSelection(selectedMonth);
 		int yearSelectionIndex = Arrays.binarySearch(allowedYears, selectedYear);
@@ -190,7 +215,7 @@ public class MonthlySalaryActivity extends TrackingActivity {
 
 	private void updateViewsFromSelectedMonth() {
 		Log.d(TAG, "Reloading data and views");
-		
+
 		salaire = salaireDao.find(selectedYear.getAnnee(), selectedMonth, defaultTjm);
 
 		totalBrutMensuelTextView.setText(salaire.getTotalBrutMensuel());
@@ -265,14 +290,50 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		SharedPreferences preferences = getPreferences(MODE_PRIVATE);
 		JoursOuvres newSelectedYear = JoursOuvres.fromYear(preferences.getInt(SELECTED_YEAR_PREF, defaultSelectedYear));
 		int newSelectedMonth = preferences.getInt(SELECTED_MONTH_PREF, defaultSelectedMonth);
-		
+
 		updateSelectedMonth(newSelectedMonth, newSelectedYear);
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		salaireDao.close();
+	}
+
+	private void selectNextMonth() {
+		int newSelectedMonth = selectedMonth + 1;
+
+		if (newSelectedMonth == 12) {
+
+			int currentYearSelectionIndex = Arrays.binarySearch(allowedYears, selectedYear);
+
+			if (currentYearSelectionIndex + 1 < allowedYears.length) {
+				newSelectedMonth = 0;
+				updateSelectedMonth(newSelectedMonth, allowedYears[currentYearSelectionIndex + 1]);
+			} else {
+				Toast.makeText(this, "Data not available yet", Toast.LENGTH_SHORT).show();
+			}
+		} else {
+			updateSelectedMonth(newSelectedMonth, selectedYear);
+		}
+	}
+
+	private void selectPreviousMonth() {
+		int newSelectedMonth = selectedMonth - 1;
+
+		if (newSelectedMonth == -1) {
+
+			int currentYearSelectionIndex = Arrays.binarySearch(allowedYears, selectedYear);
+
+			if (currentYearSelectionIndex != 0) {
+				newSelectedMonth = 0;
+				updateSelectedMonth(newSelectedMonth, allowedYears[currentYearSelectionIndex - 1]);
+			} else {
+				Toast.makeText(this, "Data not available yet", Toast.LENGTH_SHORT).show();
+			}
+		} else {
+			updateSelectedMonth(newSelectedMonth, selectedYear);
+		}
 	}
 
 }
