@@ -60,13 +60,13 @@ public class MonthlySalaryActivity extends TrackingActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
 		setContentView(R.layout.monthly_salary);
 
 		defaultTjm = getIntent().getIntExtra(DEFAULT_TJM_EXTRA, 0);
 
 		salaireDao = new SalaireDao(this);
-
+		
 		findViews();
 
 		initSpinners();
@@ -333,6 +333,12 @@ public class MonthlySalaryActivity extends TrackingActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		salaireDao.close();
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		loadSelectedMonth();
+		super.onRestoreInstanceState(savedInstanceState);
 	}
 
 }

@@ -14,7 +14,6 @@
     	>
         <activity
         	android:name=".YearSalaryActivity"
-        	android:screenOrientation="portrait"
             android:label="Salaire annuel">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +23,6 @@
         
         <activity
         	android:name=".MonthlySalaryActivity"
-        	android:screenOrientation="portrait"
             android:label="Salaire exact" />
 
 	    <activity
