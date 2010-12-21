@@ -33,7 +33,7 @@ Le nombre de jours de congés et le nombre de jours d'intercontrats sont fusionn
 
 == CSS ==
 
-Le nombre de CSS est 
+Le nombre de CSS est différents du nombres de jours de congés / intercontrats. En effet, un CSS est un jour non facturé mais aussi non payé. Il diminue donc le salaire fixe, ce qui implique un coût de salaire plus bas et impacte donc moins le CA généré qu'un congé payé.
 
 == Jours communautaires ==
 Les jours communautaires ne sont pas encore pris en compte par TJMoid, mais le seront dans un avenir proche. En attendant, vous pouvez jouer avec le CA Manuel, à condition de connaître la formule.
