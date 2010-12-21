@@ -1,0 +1,5 @@
+  * Manuel d'utilisation
+    * [SimpleExample A Simple Example]
+  * FAQ
+  * Historique
+  * Guide de développement
