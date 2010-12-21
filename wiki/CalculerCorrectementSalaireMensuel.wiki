@@ -1,0 +1,14 @@
+#summary Calculer correctement le salaire Mensuel
+
+= Introduction =
+
+Cette page a pour but de décrire la bonne utilisation de l'écran suivant :
+
+http://tjmoid.googlecode.com/svn/trunk/TJMoid/snapshot2.png
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
