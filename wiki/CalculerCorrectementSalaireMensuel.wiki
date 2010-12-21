@@ -37,3 +37,11 @@ Le nombre de CSS est différents du nombres de jours de congés / intercontrats.
 
 == Jours communautaires ==
 Les jours communautaires ne sont pas encore pris en compte par TJMoid, mais le seront dans un avenir proche. En attendant, vous pouvez jouer avec le CA Manuel, à condition de connaître la formule.
+
+== Primes brut non lissées ==
+
+Les primes étant lissées sur 6 mois, il n'est pas forcément évident de mesurer l'impact d'un changement de facturation, de la prise de jours de congés, etc. Le champ *primes brut non lissées* est la pour ça : il permet de calculer, concrètement, combien de primes ont été générées pour un mois donné. 
+
+Le calcul des primes lissées d'un mois X correspond à la moyenne des primes non lissées des 6 mois précédents.
+
+Attention : les primes brut non lissées peuvent être négatives, si le nombre de jours facturés est trop faible. Cela impactera donc la moyenne des primes lissées, et fera diminuer les primes versées sur les mois suivants.
