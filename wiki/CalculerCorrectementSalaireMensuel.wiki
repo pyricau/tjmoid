@@ -12,8 +12,20 @@ http://tjmoid.googlecode.com/svn/trunk/TJMoid/snapshot2.png
 TJMoid fonctionne de manière simplifiée par rapport à Maestro. Il ne permet de rentrer qu'un seul TJM pour un mois donné, ce qui pose problème lorsqu'on est entre deux missions, ou que l'on donne une formation quelques jours par mois. Le *CA Manuel* permet de contourner ce problème.
 
 == CA Manuel ==
-Le champ "CA Manuel" n'est pas obligatoire et restera la plupart du temps à 0.
 
-Cependant, il permet d'ajouter du CA pour les jours où l'on est facturé différement.
+=== Pour les consultants ===
+Le champ _CA Manuel_ n'est pas obligatoire et restera la plupart du temps à 0.
+
+Cependant, il permet d'ajouter du CA pour les jours où l'on est facturé différemment.
  
 Par exemple, si j'ai un TJM à 500 euros, et que pour un mois donné j'ai donné 3 jours de formation à 600 euros, il suffit d'entrée un CA Manuel de 3*(600-500)*0.9 = 270. Pourquoi le coefficient 0.9 ? Parce qu'en général le commercial prend aussi la marge de 10% sur les jours de formation.
+
+=== Pour les commerciaux ===
+TJMoid est conçu pour être utilisé par les consultants, mais peut-être très bien répondre au besoin des commerciaux.
+
+Pour cela, il suffit de rentrer un TJM à 0, le champ congés/intercontrats à 0 (mais *pas le champ CSS*, qui impacte le salaire fixe brut), puis d'ajouter le CA Manuel qui va bien.
+
+Pour calculer le CA Manuel du commercial : prendre le "CA Généré" dans Maestro, et le multiplier par 0.1 (les 10% qui vous reviennent en tant que commercial). Le CA Généré dans Maestro correspond au TJM du consultant multiplié par le nombre de jours facturés.
+
+
+
