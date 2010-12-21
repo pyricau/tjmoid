@@ -1,4 +1,4 @@
-#summary Calculer correctement le salaire Mensuel
+#summary Salaire Mensuel
 #labels Featured
 
 = Introduction =
