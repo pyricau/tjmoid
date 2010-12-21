@@ -1,5 +1,5 @@
   * Manuel d'utilisation
-    * [SimpleExample A Simple Example]
+    * [CalculerCorrectementSalaireMensuel  Salaire mensuel]
   * FAQ
   * Historique
   * Guide de développement
