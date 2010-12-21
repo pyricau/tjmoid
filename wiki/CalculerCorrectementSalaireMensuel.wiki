@@ -1,4 +1,5 @@
 #summary Calculer correctement le salaire Mensuel
+#labels Featured
 
 = Introduction =
 
@@ -27,5 +28,12 @@ Pour cela, il suffit de rentrer un TJM à 0, le champ congés/intercontrats à 0
 
 Pour calculer le CA Manuel du commercial : prendre le "CA Généré" dans Maestro, et le multiplier par 0.1 (les 10% qui vous reviennent en tant que commercial). Le CA Généré dans Maestro correspond au TJM du consultant multiplié par le nombre de jours facturés.
 
+== Congés, intercontrats ==
+Le nombre de jours de congés et le nombre de jours d'intercontrats sont fusionnés en un seul champ pour une raison simple : ils ont strictement le même effet sur votre salaire. Il s'agit, purement et simplement, de *jours non facturés*.
 
+== CSS ==
 
+Le nombre de CSS est 
+
+== Jours communautaires ==
+Les jours communautaires ne sont pas encore pris en compte par TJMoid, mais le seront dans un avenir proche. En attendant, vous pouvez jouer avec le CA Manuel, à condition de connaître la formule.
