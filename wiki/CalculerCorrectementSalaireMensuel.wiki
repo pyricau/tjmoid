@@ -6,9 +6,14 @@ Cette page a pour but de décrire la bonne utilisation de l'écran suivant :
 
 http://tjmoid.googlecode.com/svn/trunk/TJMoid/snapshot2.png
 
-= Details =
+= Détails =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+
+TJMoid fonctionne de manière simplifiée par rapport à Maestro. Il ne permet de rentrer qu'un seul TJM pour un mois donné, ce qui pose problème lorsqu'on est entre deux missions, ou que l'on donne une formation quelques jours par mois. Le *CA Manuel* permet de contourner ce problème.
+
+== CA Manuel ==
+Le champ "CA Manuel" n'est pas obligatoire et restera la plupart du temps à 0.
+
+Cependant, il permet d'ajouter du CA pour les jours où l'on est facturé différement.
+ 
+Par exemple, si j'ai un TJM à 500 euros, et que pour un mois donné j'ai donné 3 jours de formation à 600 euros, il suffit d'entrée un CA Manuel de 3*(600-500)*0.9 = 270. Pourquoi le coefficient 0.9 ? Parce qu'en général le commercial prend aussi la marge de 10% sur les jours de formation.
