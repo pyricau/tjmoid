@@ -264,12 +264,12 @@ public class MonthlySalaryActivity extends TrackingActivity {
 	private void selectNextMonth() {
 		int newSelectedMonth = selectedMonth + 1;
 
-		if (newSelectedMonth == 12) {
+		if (newSelectedMonth > Calendar.DECEMBER) {
 
 			int currentYearSelectionIndex = Arrays.binarySearch(allowedYears, selectedYear);
 
 			if (currentYearSelectionIndex + 1 < allowedYears.length) {
-				newSelectedMonth = 0;
+				newSelectedMonth = Calendar.JANUARY;
 				updateSelectedMonth(newSelectedMonth, allowedYears[currentYearSelectionIndex + 1]);
 			} else {
 				Toast.makeText(this, "Data not available yet", Toast.LENGTH_SHORT).show();
@@ -282,12 +282,12 @@ public class MonthlySalaryActivity extends TrackingActivity {
 	private void selectPreviousMonth() {
 		int newSelectedMonth = selectedMonth - 1;
 
-		if (newSelectedMonth == -1) {
+		if (newSelectedMonth < Calendar.JANUARY) {
 
 			int currentYearSelectionIndex = Arrays.binarySearch(allowedYears, selectedYear);
 
 			if (currentYearSelectionIndex != 0) {
-				newSelectedMonth = 0;
+				newSelectedMonth = Calendar.DECEMBER;
 				updateSelectedMonth(newSelectedMonth, allowedYears[currentYearSelectionIndex - 1]);
 			} else {
 				Toast.makeText(this, "Data not available yet", Toast.LENGTH_SHORT).show();
