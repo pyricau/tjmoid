@@ -1,6 +1,5 @@
 package info.piwai.tjmoid.domain;
 
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -10,7 +9,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 public class SalaireDao {
 
@@ -65,21 +63,17 @@ public class SalaireDao {
 			+ " AND " //
 			+ MONTH_NUMBER_KEY + "=?" //
 	;
-	
+
 	private static final String[] ALL_FIELDS = null;
 	private static final String NO_GROUP = null;
 	private static final String NO_HAVING = null;
 	private static final String NOT_ORDERED = null;
 	private static final String NULL_COLUMN_HACK = "NULL_COLUMN_HACK";
-	
 
 	public static class MyHelper extends SQLiteOpenHelper {
-		
-		private final Context context;
 
 		public MyHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
-			this.context = context;
 		}
 
 		@Override
@@ -89,7 +83,7 @@ public class SalaireDao {
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			
+
 		}
 	}
 
@@ -149,40 +143,38 @@ public class SalaireDao {
 
 	public SalaireMensuel find(int year, int monthNumber, int defaultTjm) {
 		SalaireMensuel salaire = findOne(year, monthNumber, defaultTjm);
-		
-		
+
 		List<SalaireMensuel> salairesSixDerniersMois = new ArrayList<SalaireMensuel>();
 		SalaireMensuel previousSalaire = salaire;
 		for (int i = 0; i < 6; i++) {
 			previousSalaire = findPrevious(previousSalaire);
 			salairesSixDerniersMois.add(previousSalaire);
 		}
-		
+
 		salaire.updatePrimeLissées(salairesSixDerniersMois);
-		
+
 		return salaire;
 	}
-	
+
 	private SalaireMensuel findPrevious(SalaireMensuel salaire) {
 		int monthNumber = salaire.monthNumber;
 		int year = salaire.year;
-		
+
 		monthNumber--;
-		
-		if (monthNumber<Calendar.JANUARY) {
+
+		if (monthNumber < Calendar.JANUARY) {
 			monthNumber = Calendar.DECEMBER;
 			year--;
 		}
-		
+
 		return findOne(year, monthNumber, 0);
 	}
-	
-	
+
 	private SalaireMensuel findOne(int year, int monthNumber, int defaultTjm) {
 		SQLiteDatabase db = helper.getWritableDatabase();
-		String[] arguments = {""+year, ""+monthNumber};
+		String[] arguments = { "" + year, "" + monthNumber };
 		Cursor cursor = db.query(SALAIRE_TABLE, ALL_FIELDS, SELECT_ONE, arguments, NO_GROUP, NO_HAVING, NOT_ORDERED);
-		
+
 		SalaireMensuel salaire;
 		if (cursor.moveToNext()) {
 			salaire = salaireFromCursor(cursor);
@@ -192,27 +184,27 @@ public class SalaireDao {
 			db.insert(SALAIRE_TABLE, NULL_COLUMN_HACK, values);
 		}
 		cursor.close();
-		
+
 		return salaire;
 	}
-	
+
 	public void update(SalaireMensuel salaire) {
 		salaire.validateOrThrow();
-		
+
 		SQLiteDatabase db = helper.getWritableDatabase();
-		
-		String[] arguments = {""+salaire.year, ""+salaire.monthNumber};
-		
+
+		String[] arguments = { "" + salaire.year, "" + salaire.monthNumber };
+
 		ContentValues values = salaireToContentValues(salaire);
 		db.update(SALAIRE_TABLE, values, SELECT_ONE, arguments);
 	}
-	
+
 	/**
-	 * Should be called when your activity does not need database access anymore, for example in its onDestroy method.
+	 * Should be called when your activity does not need database access
+	 * anymore, for example in its onDestroy method.
 	 */
 	public void close() {
 		helper.close();
 	}
-	
 
 }

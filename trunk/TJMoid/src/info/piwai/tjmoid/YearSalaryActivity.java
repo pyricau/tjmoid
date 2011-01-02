@@ -21,7 +21,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
@@ -31,9 +30,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.admob.android.ads.AdView;
-import com.admob.android.ads.SimpleAdListener;
-
 public class YearSalaryActivity extends TrackingActivity {
 
 	private EditText tjmInput;
@@ -41,8 +37,6 @@ public class YearSalaryActivity extends TrackingActivity {
 	private TextView salaireBrutMensuelTextView;
 	private TextView salaireNetMensuelTextView;
 	private Button monthlySalaryButton;
-
-	private AdView adView;
 
 	private CalculateurSalaire calculateurSalaire;
 
@@ -56,7 +50,6 @@ public class YearSalaryActivity extends TrackingActivity {
 		salaireBrutAnnuelTextView = (TextView) findViewById(R.id.salaireBrutAnnuelTextView);
 		salaireBrutMensuelTextView = (TextView) findViewById(R.id.salaireBrutMensuelTextView);
 		salaireNetMensuelTextView = (TextView) findViewById(R.id.salaireNetMensuelTextView);
-		adView = (AdView) findViewById(R.id.ad);
 
 		monthlySalaryButton = (Button) findViewById(R.id.monthlySalaryButton);
 
