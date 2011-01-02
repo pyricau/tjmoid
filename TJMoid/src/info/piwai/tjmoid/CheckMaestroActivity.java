@@ -1,6 +1,5 @@
 package info.piwai.tjmoid;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -61,15 +60,7 @@ public class CheckMaestroActivity extends TrackingActivity {
 		webSettings.setJavaScriptEnabled(true);
 		webSettings.setBuiltInZoomControls(true);
 
-		String secuNumber = loadSecuNumber();
-
-		if ("".equals(secuNumber)) {
-			showDialog(SECU_NUMBER_DIALOG);
-		} else {
-			showMaestroSalaryPage();
-		}
-		
-
+		showDialog(SECU_NUMBER_DIALOG);
 	}
 
 	private String loadSecuNumber() {
@@ -150,9 +141,6 @@ public class CheckMaestroActivity extends TrackingActivity {
 	}
 
 	private void showMaestroSalaryPage() {
-		
-		Log.d(TAG, "showMaestroSalaryPage");
-		
 		
 		String secuNumber = loadSecuNumber();
 		
