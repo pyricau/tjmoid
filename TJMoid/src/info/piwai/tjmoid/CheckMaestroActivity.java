@@ -7,7 +7,6 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +20,6 @@ import android.widget.EditText;
 public class CheckMaestroActivity extends TrackingActivity {
 	
 	private static final String SALAIRE_URL = "https://ecoles.excilys.com/maestro-ref/personne/salairePersonne.htm?action=Valider&idPersonne=";
-	private static final String TAG = CheckMaestroWebViewClient.class.getSimpleName();
 	
 	private class CheckMaestroWebViewClient extends WebViewClient {
 
