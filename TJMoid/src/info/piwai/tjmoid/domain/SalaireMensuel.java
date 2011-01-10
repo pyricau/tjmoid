@@ -278,7 +278,7 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 	}
 
 	public String getTotalNetMensuel() {
-		return Math.round(calculerSalaireBrutDuMois() * 0.77)+"€";
+		return Math.round((calculerSalaireBrutDuMois() + primesLissées) * 0.77)+"€";
 	}
 	
 	public String getChiffreAffaireGenere() {
