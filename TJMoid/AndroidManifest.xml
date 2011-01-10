@@ -14,7 +14,7 @@
     	android:name=".TJMoidApplication"
     	>
         <activity
-        	android:name=".YearSalaryActivity"
+        	android:name=".YearSalaryActivity_"
             android:label="TJMoid">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
         </activity>
         
         <activity
-        	android:name=".MonthlySalaryActivity"
+        	android:name=".MonthlySalaryActivity_"
             android:label="Salaire exact" />
 
 	    <activity
@@ -36,9 +36,6 @@
 	    	android:label="Salaire dans Maestro"
 	    	android:theme="@android:style/Theme.NoTitleBar"
 	    	/>	    	
-	    	
-	    	
-    
 
 		<!-- The application's publisher ID assigned by AdMob -->
 		<meta-data android:value="a14d0b318923d37" android:name="ADMOB_PUBLISHER_ID" />

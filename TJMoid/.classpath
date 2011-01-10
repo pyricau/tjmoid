@@ -7,5 +7,11 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/libGoogleAnalytics.jar"/>
 	<classpathentry kind="lib" path="lib/admob-sdk-android.jar"/>
+	<classpathentry kind="lib" path="lib/androidannotations-1.0-RC3.jar"/>
+	<classpathentry kind="src" path=".apt_generated">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
