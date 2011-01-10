@@ -18,16 +18,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.googlecode.androidannotations.annotations.Click;
+import com.googlecode.androidannotations.annotations.ItemSelect;
+import com.googlecode.androidannotations.annotations.Layout;
+import com.googlecode.androidannotations.annotations.ViewById;
+
+@Layout(R.layout.monthly_salary)
 public class MonthlySalaryActivity extends TrackingActivity {
 	private static final String TAG = MonthlySalaryActivity.class.getSimpleName();
 
@@ -35,70 +39,67 @@ public class MonthlySalaryActivity extends TrackingActivity {
 	private static final String SELECTED_YEAR_PREF = "selectedYear";
 	private static final String SELECTED_MONTH_PREF = "selectedMonth";
 
-	private int defaultTjm;
+	@ViewById
+	Spinner monthSelectSpinner;
 
-	private SalaireDao salaireDao;
+	@ViewById
+	Spinner yearSelectSpinner;
 
-	private Spinner monthSelectSpinner;
-	private Spinner yearSelectSpinner;
-	private EditText tjmInput;
-	private EditText congesInput;
+	@ViewById
+	EditText tjmInput;
 
-	private TextView totalBrutMensuelTextView;
-	private TextView errors;
+	@ViewById
+	EditText congesInput;
+
+	@ViewById
+	TextView totalBrutMensuelTextView;
+
+	@ViewById
+	TextView errors;
+
+	@ViewById
+	TextView fixeBrutMensuelTextView;
+
+	@ViewById
+	TextView primesBrutMensuellesTextView;
+
+	@ViewById
+	TextView primesNonLisseesTextView;
+
+	@ViewById
+	TextView totalNetMensuelTextView;
+
+	@ViewById
+	TextView caGenereTextView;
+
+	@ViewById
+	EditText cssInput;
+
+	@ViewById
+	EditText caManuelInput;
+
+	int defaultTjm;
+
+	SalaireDao salaireDao;
 
 	private JoursOuvres selectedYear;
 	private int selectedMonth;
 	private JoursOuvres[] allowedYears;
 	private SalaireMensuel salaire;
-	private TextView fixeBrutMensuelTextView;
-	private TextView primesBrutMensuellesTextView;
-	private TextView primesNonLisseesTextView;
-	private TextView totalNetMensuelTextView;
-	private TextView caGenereTextView;
-	private EditText cssInput;
-	private EditText caManuelInput;
-	private Button nextMonthButton;
-	private Button previousMonthButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.monthly_salary);
-
 		defaultTjm = getIntent().getIntExtra(DEFAULT_TJM_EXTRA, 0);
 
 		salaireDao = new SalaireDao(this);
-
-		findViews();
 
 		initSpinners();
 
 		bindSpinners();
 
 		bindInputs();
-
-		bindButtons();
-	}
-
-	private void findViews() {
-		yearSelectSpinner = (Spinner) findViewById(R.id.yearSelectSpinner);
-		monthSelectSpinner = (Spinner) findViewById(R.id.monthSelectSpinner);
-		tjmInput = (EditText) findViewById(R.id.tjmInput);
-		congesInput = (EditText) findViewById(R.id.congesInput);
-		cssInput = (EditText) findViewById(R.id.cssInput);
-		caManuelInput = (EditText) findViewById(R.id.caManuelInput);
-
-		totalBrutMensuelTextView = (TextView) findViewById(R.id.totalBrutMensuelTextView);
-		totalNetMensuelTextView = (TextView) findViewById(R.id.totalNetMensuelTextView);
-		fixeBrutMensuelTextView = (TextView) findViewById(R.id.fixeBrutMensuelTextView);
-		primesBrutMensuellesTextView = (TextView) findViewById(R.id.primesBrutMensuellesTextView);
-		primesNonLisseesTextView = (TextView) findViewById(R.id.primesNonLisseesTextView);
-		caGenereTextView = (TextView) findViewById(R.id.caGenereTextView);
-		errors = (TextView) findViewById(R.id.errors);
-		previousMonthButton = (Button) findViewById(R.id.previousMonthButton);
-		nextMonthButton = (Button) findViewById(R.id.nextMonthButton);
 	}
 
 	private void initSpinners() {
@@ -112,21 +113,17 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		monthSelectSpinner.setAdapter(monthAdapter);
 	}
 
+	@ItemSelect
+	void yearSelectSpinner(boolean somethingSelected, JoursOuvres selected) {
+		if (somethingSelected) {
+			if (selectedYear != selected) {
+				updateSelectedMonth(selectedMonth, selected);
+				getTracker().trackEvent("Spinner", "Change", "Year", selectedYear.getAnnee());
+			}
+		}
+	}
+
 	private void bindSpinners() {
-		yearSelectSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
-				if (selectedYear != allowedYears[position]) {
-					updateSelectedMonth(selectedMonth, allowedYears[position]);
-					getTracker().trackEvent("Spinner", "Change", "Year", selectedYear.getAnnee());
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-			}
-		});
-
 		monthSelectSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
@@ -246,22 +243,8 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		}
 	}
 
-	private void bindButtons() {
-		previousMonthButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				selectPreviousMonth();
-			}
-		});
-		nextMonthButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				selectNextMonth();
-			}
-		});
-	}
-
-	private void selectNextMonth() {
+	@Click
+	void nextMonthButton() {
 		int newSelectedMonth = selectedMonth + 1;
 
 		if (newSelectedMonth > Calendar.DECEMBER) {
@@ -279,7 +262,8 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		}
 	}
 
-	private void selectPreviousMonth() {
+	@Click
+	void previousMonthButton() {
 		int newSelectedMonth = selectedMonth - 1;
 
 		if (newSelectedMonth < Calendar.JANUARY) {

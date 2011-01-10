@@ -24,19 +24,27 @@ import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.googlecode.androidannotations.annotations.Click;
+import com.googlecode.androidannotations.annotations.Layout;
+import com.googlecode.androidannotations.annotations.ViewById;
+
+@Layout(R.layout.year_salary)
 public class YearSalaryActivity extends TrackingActivity {
 
-	private EditText tjmInput;
-	private TextView salaireBrutAnnuelTextView;
-	private TextView salaireBrutMensuelTextView;
-	private TextView salaireNetMensuelTextView;
-	private Button monthlySalaryButton;
+	@ViewById
+	EditText tjmInput;
+
+	@ViewById
+	TextView salaireBrutAnnuelTextView;
+
+	@ViewById
+	TextView salaireBrutMensuelTextView;
+
+	@ViewById
+	TextView salaireNetMensuelTextView;
 
 	private CalculateurSalaire calculateurSalaire;
 
@@ -44,14 +52,6 @@ public class YearSalaryActivity extends TrackingActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.year_salary);
-
-		tjmInput = (EditText) findViewById(R.id.tjmInput);
-		salaireBrutAnnuelTextView = (TextView) findViewById(R.id.salaireBrutAnnuelTextView);
-		salaireBrutMensuelTextView = (TextView) findViewById(R.id.salaireBrutMensuelTextView);
-		salaireNetMensuelTextView = (TextView) findViewById(R.id.salaireNetMensuelTextView);
-
-		monthlySalaryButton = (Button) findViewById(R.id.monthlySalaryButton);
 
 		calculateurSalaire = buildCalculateurSalaire();
 
@@ -61,17 +61,14 @@ public class YearSalaryActivity extends TrackingActivity {
 				onTjmChanged();
 			}
 		});
+	}
 
-		monthlySalaryButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(YearSalaryActivity.this, MonthlySalaryActivity.class);
-				int defaultTjm = tjmFromInput();
-				intent.putExtra(MonthlySalaryActivity.DEFAULT_TJM_EXTRA, defaultTjm);
-				startActivity(intent);
-			}
-		});
-
+	@Click
+	void monthlySalaryButton() {
+		Intent intent = new Intent(YearSalaryActivity.this, MonthlySalaryActivity.class);
+		int defaultTjm = tjmFromInput();
+		intent.putExtra(MonthlySalaryActivity.DEFAULT_TJM_EXTRA, defaultTjm);
+		startActivity(intent);
 	}
 
 	private void onTjmChanged() {
