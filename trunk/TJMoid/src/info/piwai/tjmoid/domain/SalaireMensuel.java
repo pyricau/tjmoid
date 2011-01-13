@@ -6,6 +6,8 @@ import java.util.List;
 
 public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 
+	private static final double TAUX_CHARGES_SALAIRE_NET = 0.77;
+
 	/**
 	 * Nécessaire pour calculer l'impact d'un CSS sur le brut
 	 */
@@ -131,9 +133,10 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 	private double calculerChiffreAffairePourPrimes() {
 		validateOrThrow();
 
-		double salaireBrutDuMois = calculerSalaireBrutDuMois();
 
-		double chiffreAffairePourSalarié = calculerChiffreAffairePourSalarié(salaireBrutDuMois);
+		double chiffreAffairePourSalarié = calculerChiffreAffairePourSalarié();
+		
+		double salaireBrutDuMois = calculerSalaireFixeBrutDuMois();
 
 		double coutSalaire = salaireBrutDuMois * tauxChargesSocialesPatronales;
 
@@ -152,7 +155,7 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 		}
 	}
 
-	private double calculerSalaireBrutDuMois() {
+	private double calculerSalaireFixeBrutDuMois() {
 		double tauxHoraireMoyen = salaireBrutDeBase / NOMBRE_DHEURES_MOYEN_PAR_MOIS;
 
 		double retraitCongesSansSolde = NOMBRE_DHEURES_PAR_JOUR * tauxHoraireMoyen * nbCongesSansSolde;
@@ -161,19 +164,22 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 		return salaireBrutDuMois;
 	}
 
-	private double calculerChiffreAffairePourSalarié(double salaireBrutDuMois) {
-		double chiffreAffaireGenere = calculerChiffreAffaireGénéré(salaireBrutDuMois);
+	private double calculerChiffreAffairePourSalarié() {
+		double chiffreAffaireGenere = calculerChiffreAffaireGénéré();
 
 		return tauxPartageSalariéEntreprise * chiffreAffaireGenere;
 	}
 
-	private double calculerChiffreAffaireGénéré(double salaireBrutDuMois) {
+	private double calculerChiffreAffaireGénéré() {
 		double nbJoursFacturés = calculerNbJoursFacturés();
 		double chiffreAffaireFacturation = (1 - tauxMargeCommerciale) * (tjm * nbJoursFacturés);
 
-		// TODO vérifier la formule de calcul des jours communautaires
-		double tauxJoursCommunautaires = (1.0 * nbJoursCommunautaires) / nbJoursOuvres;
-		double chiffreAffaireCommunautaire = (salaireBrutDuMois * tauxJoursCommunautaires) * tauxChargesSocialesPatronales / tauxPartageSalariéEntreprise;
+		
+		double salaireBrutUnJour = salaireBrutDeBase / nbJoursOuvres;
+		double chiffreAffaireUnJourCommunautaire = salaireBrutUnJour * tauxChargesSocialesPatronales / tauxPartageSalariéEntreprise;
+		
+		double chiffreAffaireCommunautaire = nbJoursCommunautaires * chiffreAffaireUnJourCommunautaire;
+		
 
 		double chiffreAffaireGenere = chiffreAffaireFacturation + chiffreAffaireCommunautaire + chiffreAffaireManuel;
 		return chiffreAffaireGenere;
@@ -183,6 +189,10 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 		return nbJoursOuvres - (nbConges + nbCongesSansSolde + nbJoursCommunautaires);
 	}
 
+	private double calculerSalaireTotalNetDuMois() {
+		return (calculerSalaireFixeBrutDuMois() + primesLissées) * TAUX_CHARGES_SALAIRE_NET;
+	}
+	
 	public void updatePrimeLissées(List<SalaireMensuel> salairesSixDerniersMois) {
 		this.primesLissées = calculerPrimesLissées(salairesSixDerniersMois);
 	}
@@ -200,7 +210,7 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 	}
 
 	public String getTotalBrutMensuel() {
-		return Math.round(calculerSalaireBrutDuMois() + primesLissées)+"€";
+		return Math.round(calculerSalaireFixeBrutDuMois() + primesLissées)+"€";
 	}
 	
 	public String getCssAsString() {
@@ -213,6 +223,18 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 
 	public boolean cssChanged(String css) {
 		return doubleFromString(css) != this.nbCongesSansSolde;
+	}
+	
+	public String getJoursComAsString() {
+		return nbJoursCommunautaires + "";
+	}
+
+	public void setJoursComAsString(String nbJoursCommunautaires) {
+		this.nbJoursCommunautaires = doubleFromString(nbJoursCommunautaires);
+	}
+
+	public boolean joursComChanged(String nbJoursCommunautaires) {
+		return doubleFromString(nbJoursCommunautaires) != this.nbJoursCommunautaires;
 	}
 	
 	public String getCaManuelAsString() {
@@ -270,7 +292,7 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 	}
 
 	public String getFixeBrutMensuel() {
-		return Math.round(calculerSalaireBrutDuMois())+"€";
+		return Math.round(calculerSalaireFixeBrutDuMois())+"€";
 	}
 
 	public String getPrimesBrutMensuelles() {
@@ -278,11 +300,11 @@ public final class SalaireMensuel implements Comparable<SalaireMensuel> {
 	}
 
 	public String getTotalNetMensuel() {
-		return Math.round((calculerSalaireBrutDuMois() + primesLissées) * 0.77)+"€";
+		return Math.round(calculerSalaireTotalNetDuMois())+"€";
 	}
-	
+
 	public String getChiffreAffaireGenere() {
-		return calculerChiffreAffaireGénéré(calculerSalaireBrutDuMois())+"€";
+		return String.format("%.2f€", calculerChiffreAffaireGénéré());
 	}
 
 	public String getPrimesNonLissées() {

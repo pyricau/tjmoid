@@ -74,6 +74,9 @@ public class MonthlySalaryActivity extends TrackingActivity {
 
 	@ViewById
 	EditText cssInput;
+	
+	@ViewById
+	EditText joursComInput;
 
 	@ViewById
 	EditText caManuelInput;
@@ -175,6 +178,10 @@ public class MonthlySalaryActivity extends TrackingActivity {
 		if (salaire.cssChanged(cssInput.getText().toString())) {
 			cssInput.setText(salaire.getCssAsString());
 		}
+		
+		if (salaire.joursComChanged(joursComInput.getText().toString())) {
+			joursComInput.setText(salaire.getJoursComAsString());
+		}
 
 		if (salaire.caManuelChanged(caManuelInput.getText().toString())) {
 			caManuelInput.setText(salaire.getCaManuelAsString());
@@ -210,6 +217,16 @@ public class MonthlySalaryActivity extends TrackingActivity {
 				String css = s.toString();
 				if (salaire.cssChanged(css)) {
 					salaire.setCssAsString(css);
+					validateAndUpdate();
+				}
+			}
+		});
+		joursComInput.addTextChangedListener(new AbstractTextWatcher() {
+			@Override
+			public void afterTextChanged(Editable s) {
+				String joursCom = s.toString();
+				if (salaire.joursComChanged(joursCom)) {
+					salaire.setJoursComAsString(joursCom);
 					validateAndUpdate();
 				}
 			}
