@@ -116,6 +116,7 @@
 			    android:layout_toLeftOf="@id/helper"
 			    android:layout_alignLeft="@id/labelTjm"
 			    />
+  
 		
 			<TextView 
 				android:id="@+id/labelConges"
@@ -152,62 +153,90 @@
 				android:layout_below="@id/tjmInput"
 				android:layout_centerHorizontal="true" />
 			    
-		    
 			<TextView 
-				android:id="@+id/labelCaManuel"
+				android:id="@+id/labelCss"
 			    android:layout_width="wrap_content" 
 			    android:layout_height="wrap_content"
 			    android:textSize="14sp"
 			    android:layout_marginLeft="5dip"
 			    android:textColor="#000"
 			    
-			    android:text="CA Manuel"
+			    android:text="CSS             "
 			    
 			    android:layout_toLeftOf="@id/helper2"
 			    android:layout_alignTop="@id/helper2"
-			    android:layout_alignParentLeft="true"
 			    />
+			    
 			<EditText  
-				android:id="@+id/caManuelInput"
+				android:id="@+id/cssInput"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content" 
-			    android:hint="CA Manuel"
+			    android:hint="0"
 			    android:inputType="numberDecimal"
 			   	android:textSize="18sp"
 			    
 			    android:text="300"
-			    android:layout_below="@id/labelCaManuel"
+			    android:layout_below="@id/labelCss"
 			    android:layout_toLeftOf="@id/helper2"
-			    android:layout_alignLeft="@id/labelCaManuel"
+			    android:layout_alignLeft="@id/labelCss"
 			    />
+			    
+			<TextView 
+				android:id="@+id/labelJoursCom"
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content"
+			    android:textSize="14sp"
+			    android:layout_marginLeft="5dip"
+			    android:textColor="#000"
+			    
+			    android:text="COM"
+			    
+			    android:layout_toLeftOf="@id/labelCss"
+			    android:layout_alignTop="@id/helper2"
+			    android:layout_alignParentLeft="true"
+			    />
+			    
+			<EditText  
+				android:id="@+id/joursComInput"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content" 
+			    android:hint="COM"
+			    android:inputType="numberDecimal"
+			   	android:textSize="18sp"
+			    
+			    android:text="1"
+			    android:layout_below="@id/labelJoursCom"
+			    android:layout_toLeftOf="@id/cssInput"
+			    android:layout_alignLeft="@id/labelJoursCom"
+			    />			    
 		
 			<TextView 
-				android:id="@+id/labelCss"
+				android:id="@+id/labelCaManuel"
 			    android:layout_width="wrap_content" 
 			    android:layout_height="wrap_content"
 			    android:textSize="14sp"
 			    android:layout_marginRight="5dip"
 			    android:textColor="#000"
 			    
-			    android:text="Congés sans solde"
+			    android:text="CA Manuel"
 			    
 			    android:layout_toRightOf="@id/helper2"
 			    android:layout_alignTop="@id/helper2"
 			    android:layout_alignParentRight="true"
 			    />
 			<EditText  
-				android:id="@+id/cssInput"
+				android:id="@+id/caManuelInput"
 			    android:layout_width="wrap_content" 
 			    android:layout_height="wrap_content" 
-			    android:hint="CSS"
+			    android:hint="CA Manuel"
 			    android:inputType="numberDecimal"
 			    android:textSize="18sp"
 			  	
-			    android:text="1"
-			    android:layout_below="@id/labelCss"
+			    android:text="300"
+			    android:layout_below="@id/labelCaManuel"
 			    android:layout_toRightOf="@id/helper2"
-			    android:layout_alignRight="@id/labelCss"
-			    />	    
+			    android:layout_alignRight="@id/labelCaManuel"
+			    />	
 			    
 			    
 		    <ImageView
