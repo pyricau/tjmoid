@@ -17,31 +17,26 @@ public abstract class TrackingPreferenceActivity extends PreferenceActivity {
 		super.onCreate(savedInstanceState);
 		tracker = GoogleAnalyticsTracker.getInstance();
 
-		tracker.start(Constants.ANALYTICS_ID, 20, this);
-		
-		new Thread() {
-			@Override
-			public void run() {
-				String versionName;
-				String versionCode;
-				try {
-					PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-					versionName = packageInfo.versionName;
-					versionCode = String.valueOf(packageInfo.versionCode);
-				} catch (NameNotFoundException e) {
-					versionName = "UNKNOWN";
-					versionCode = "0";
-				}
+		tracker.start(Constants.ANALYTICS_ID, 10, this);
 
-				tracker.setCustomVar(1, "versionName", versionName, 2);
-				tracker.setCustomVar(2, "versionCode", versionCode, 2);
+		String versionName;
+		String versionCode;
+		try {
+			PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+			versionName = packageInfo.versionName;
+			versionCode = String.valueOf(packageInfo.versionCode);
+		} catch (NameNotFoundException e) {
+			versionName = "UNKNOWN";
+			versionCode = "0";
+		}
 
-				tracker.setCustomVar(3, "release", Build.VERSION.RELEASE, 2);
-				tracker.setCustomVar(4, "model", Build.MODEL, 2);
+		tracker.setCustomVar(1, "versionName", versionName, 2);
+		tracker.setCustomVar(2, "versionCode", versionCode, 2);
 
-				tracker.trackPageView("/" + getClass().getSimpleName());
-			}
-		}.start();
+		tracker.setCustomVar(3, "release", Build.VERSION.RELEASE, 2);
+		tracker.setCustomVar(4, "model", Build.MODEL, 2);
+
+		tracker.trackPageView("/" + getClass().getSimpleName());
 	}
 
 	@Override
