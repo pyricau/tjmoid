@@ -48,12 +48,16 @@ public class YearSalaryActivity extends TrackingActivity {
 
 	private CalculateurSalaire calculateurSalaire;
 
+	private CalculateurSalaire calculateurSalaireNoHolliday;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		calculateurSalaire = buildCalculateurSalaire();
+
+		calculateurSalaireNoHolliday = buildNoHollidayCalculateurSalaire();
 
 		tjmInput.addTextChangedListener(new AbstractTextWatcher() {
 			@Override
@@ -75,13 +79,17 @@ public class YearSalaryActivity extends TrackingActivity {
 		int tjm = tjmFromInput();
 
 		long salaireBrutAnnuel = calculateurSalaire.calculerSalaireBrut(tjm);
-		salaireBrutAnnuelTextView.setText(salaireBrutAnnuel + " euros");
+		long salaireBrutAnnuelNoHolliday = calculateurSalaireNoHolliday.calculerSalaireBrut(tjm);
+
+		salaireBrutAnnuelTextView.setText(salaireBrutAnnuel + " / " + salaireBrutAnnuelNoHolliday + " euros");
 
 		long salaireBrutMensuel = salaireBrutAnnuel / 12;
-		salaireBrutMensuelTextView.setText(salaireBrutMensuel + " euros");
+		long salaireBrutMensuelNoHolliday = salaireBrutAnnuelNoHolliday / 12;
+		salaireBrutMensuelTextView.setText(salaireBrutMensuel + " / " + salaireBrutMensuelNoHolliday + " euros");
 
 		long salaireNetMensuel = (long) (((double) salaireBrutMensuel) * 0.77);
-		salaireNetMensuelTextView.setText(salaireNetMensuel + " euros");
+		long salaireNetMensuelNoHolliday = (long) (((double) salaireBrutMensuelNoHolliday) * 0.77);
+		salaireNetMensuelTextView.setText(salaireNetMensuel + " / " + salaireNetMensuelNoHolliday + " euros");
 	}
 
 	private int tjmFromInput() {
@@ -100,6 +108,7 @@ public class YearSalaryActivity extends TrackingActivity {
 	protected void onResume() {
 		super.onResume();
 		calculateurSalaire = buildCalculateurSalaire();
+		calculateurSalaireNoHolliday = buildNoHollidayCalculateurSalaire();
 		onTjmChanged();
 	}
 
@@ -112,6 +121,19 @@ public class YearSalaryActivity extends TrackingActivity {
 				.tauxChargesSocialesPatronales(getDouble(preferences, "tauxChargesSocialesPatronales", 1.58)) //
 				.tauxPartageIngeEntreprise(getDouble(preferences, "tauxPartageIngeEntreprise", 0.6)) //
 				.nbJoursTravaillesAnnuels(getDouble(preferences, "nbJoursTravaillesAnnuels", 219)) //
+				.tauxMargeCommerciale(getDouble(preferences, "tauxMargeCommerciale", 0.1));
+		return builder.build();
+	}
+
+	private CalculateurSalaire buildNoHollidayCalculateurSalaire() {
+
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+		Builder builder = new CalculateurSalaire.Builder();
+		builder.salaireBrutDeBase(getDouble(preferences, "salaireBrutDeBase", 2584)) //
+				.tauxChargesSocialesPatronales(getDouble(preferences, "tauxChargesSocialesPatronales", 1.58)) //
+				.tauxPartageIngeEntreprise(getDouble(preferences, "tauxPartageIngeEntreprise", 0.6)) //
+				.nbJoursTravaillesAnnuels(253) //
 				.tauxMargeCommerciale(getDouble(preferences, "tauxMargeCommerciale", 0.1));
 		return builder.build();
 	}
