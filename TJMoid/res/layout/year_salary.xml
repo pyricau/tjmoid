@@ -46,7 +46,7 @@
 			<TextView 
 			    android:layout_width="fill_parent" 
 			    android:layout_height="wrap_content" 
-			    android:text="Brut annuel :"
+			    android:text="Brut annuel (avec / sans congés) :"
 			    android:textColor="@color/label"/>
 			<TextView 
 				android:id="@+id/salaireBrutAnnuelTextView"
@@ -65,7 +65,7 @@
 		    <TextView
 		    	android:layout_width="fill_parent"
 		    	android:layout_height="wrap_content"
-		    	android:text="Brut mensuel :"
+		    	android:text="Brut mensuel (avec / sans congés) :"
 		    	android:textColor="@color/label"/>	
 		    <TextView
 		    	android:id="@+id/salaireBrutMensuelTextView"
@@ -84,7 +84,7 @@
 			<TextView
 		    	android:layout_width="fill_parent"
 		    	android:layout_height="wrap_content"
-		    	android:text="Net mensuel :"
+		    	android:text="Net mensuel (avec / sans congés) :"
 		    	android:textColor="@color/label"/>	
 		    <TextView
 		    	android:id="@+id/salaireNetMensuelTextView"
