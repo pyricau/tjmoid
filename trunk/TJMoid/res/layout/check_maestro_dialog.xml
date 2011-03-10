@@ -10,7 +10,6 @@
 		    android:layout_width="fill_parent" 
 		    android:layout_height="wrap_content" 
 		    android:hint="186089200000000"
-		    android:inputType="number"
 		    />
 		    
        <EditText  
