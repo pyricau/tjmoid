@@ -1,0 +1,22 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	android:key="first_preferencescreen">
+
+
+	<EditTextPreference android:key="salaireBrutDeBase"
+		android:title="Salaire Brut de base" android:summary="Salaire de base dans le bulletin de PAIE"
+		android:defaultValue="2584" />
+	<EditTextPreference android:title="Taux de charges sociales patronales"
+		android:key="tauxChargesSocialesPatronales" android:summary="Permet de déterminer le coût du salaire"
+		android:defaultValue="1.58" />
+	<EditTextPreference android:summary="Règle des 60/40"
+		android:title="Taux de partage Salarié / Entreprise" android:key="tauxPartageSalarieEntreprise"
+		android:defaultValue="0.6" />
+	<EditTextPreference android:summary="Tel que défini dans le contrat de travail"
+		android:title="Nombre de jours travaillés par an" android:key="nbJoursTravaillesAnnuels"
+		android:defaultValue="219" />
+	<EditTextPreference android:title="Marge commerciale"
+		android:key="tauxMargeCommerciale" android:summary="La part du TJM qui revient aux commerciaux"
+		android:defaultValue="0.1" />
+	<Preference android:key="reset" android:title="Valeurs par défaut"
+		android:summary="Reconfigurer aux valeurs par défaut" />
+</PreferenceScreen> 
